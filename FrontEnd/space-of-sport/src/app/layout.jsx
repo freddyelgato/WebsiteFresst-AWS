@@ -1,31 +1,23 @@
-import { Geist, Geist_Mono } from "next/font/google";
+// layout.jsx
+
+"use client"; // Asegura que este archivo se ejecute solo en el cliente
+import React, { useEffect } from "react"; // Importar React y useEffect
 import Navbar from "../components/Navbar";
 import "../styles/globals.css";
+import 'bootstrap/dist/css/bootstrap.min.css'; // Estilos de Bootstrap
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: "Space of Sport",
-  description: "Encuentra los mejores productos deportivos en un solo lugar",
-};
-
+// Componente funcional RootLayout donde se usa useEffect
 export default function RootLayout({ children }) {
+  // Cargar Bootstrap JS solo en el cliente con useEffect
+  useEffect(() => {
+    require("bootstrap/dist/js/bootstrap.bundle.min.js");
+  }, []); // Solo se ejecuta una vez cuando el componente se monta
+
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {/* Navbar */}
+      <body>
         <Navbar />
-        {/* Main Content */}
         <main>{children}</main>
-        {/* Footer */}
         <footer>
           <p>© 2025 Space of Sport - Todos los derechos reservados.</p>
         </footer>
