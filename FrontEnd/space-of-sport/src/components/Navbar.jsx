@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 "use client"; // Asegura que este archivo se ejecute solo en el cliente
 import React from "react";
 import Link from "next/link";
@@ -33,8 +32,59 @@ function Navbar() {
                 Products
               </Link>
             </li>
+
+            {/* Lista Desplegable */}
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <Link href="/products" className="dropdown-item">
+                    All Products
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products?category=shirts" className="dropdown-item">
+                    Sports Shirts
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products?category=pants" className="dropdown-item">
+                    Sports Pants
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products?category=shorts" className="dropdown-item">
+                    Sports Shorts
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products?category=socks" className="dropdown-item">
+                    Sports Socks
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products?category=hats" className="dropdown-item">
+                    Sports Hats
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products?category=shoes" className="dropdown-item">
+                    Sports Shoes
+                  </Link>
+                </li>
+              </ul>
+            </li>
+
             <li className="nav-item">
-              {/* Ruta correcta a CarPage (debe existir en src/app/carPage.jsx) */}
               <Link href="/Cart" className="nav-link">
                 Cart
               </Link>
