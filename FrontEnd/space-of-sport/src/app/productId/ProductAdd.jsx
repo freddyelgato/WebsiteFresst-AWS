@@ -34,7 +34,7 @@ function ProductAdd() {
     formData.append('image', product.image);
 
     try {
-      const response = await fetch('http://localhost:5000/api/products', {
+      const response = await fetch('http://localhost:3000/api/products', {
         method: 'POST',
         body: formData
       });
