@@ -1,8 +1,30 @@
-[{
-  "id": 1,
-  "name": "Sports T-shirt",
-  "category": "Clothing",
-  "price": 20.99,
-  "imageUrl": "http://localhost:4000/uploads/ts_d.jpg"
-}]
-
+[
+  {
+    "id": 1,
+    "name": "Sports T-shirt",
+    "category": "Clothing",
+    "price": 20.99,
+    "imageUrl": "http://localhost:4000/uploads/ts_d.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Freddy",
+    "price": 24,
+    "category": "Shirt",
+    "imageUrl": "uploads/1736987733122.png"
+  },
+  {
+    "id": 3,
+    "name": "Freddy",
+    "price": 24,
+    "category": "Shirt",
+    "imageUrl": "uploads/1737082175570.png"
+  },
+  {
+    "id": "b9bcb259-c320-4846-8b91-acfaea8bec44",
+    "name": "Freddy",
+    "price": 24,
+    "category": "Shirt",
+    "imageUrl": "uploads/1737083428314.png"
+  }
+]

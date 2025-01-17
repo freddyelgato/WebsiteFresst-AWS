@@ -3,14 +3,14 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors'); // Agregado para la configuración de CORS
+const cors = require('cors');
 
 const app = express();
 
 // Configuración de CORS
 app.use(cors({
     origin: "http://localhost:3000", // Permite solicitudes desde el frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
+    methods: ["GET", "POST"], // Métodos permitidos
 }));
 
 // Ruta raíz
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 // Configuración de almacenamiento de imágenes (Multer)
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, path.join(__dirname, '..', 'uploads')); // Carpeta 'uploads' dentro de Product
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -31,26 +31,19 @@ const upload = multer({ storage: storage });
 
 // Middleware
 app.use(bodyParser.json());
-app.use('/uploads', express.static('uploads')); // Carpeta para imágenes
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'))); // Carpeta para imágenes
 
 // Base de datos (archivo JSON)
-const databasePath = path.join(__dirname, '..', '..', '..', 'databases', 'products.json');
+    const databasePath = path.join(__dirname, '../../../databases/Products/products.json');
+console.log('Database path:', databasePath);  // Verifica que la ruta sea correcta.
 
 // Verifica si el archivo de la base de datos existe; si no, lo crea
 if (!fs.existsSync(databasePath)) {
     fs.writeFileSync(databasePath, JSON.stringify([]));
 }
 
-// Ruta para cargar imágenes
-app.post('/api/upload', upload.single('image'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-    }
-    res.status(200).json({ message: 'File uploaded successfully', filePath: req.file.path });
-});
-
 // Rutas
-const productsRoutes = require('./routes/products');
+const productsRoutes = require('./routes/products'); // Correcta ubicación del archivo products.js
 app.use('/api/products', productsRoutes);
 
 // Middleware para manejo de errores

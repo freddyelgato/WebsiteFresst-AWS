@@ -1,0 +1,20 @@
+services:
+  # Products domain microservices
+  products-db:
+    build:
+      context: ../BackEnd/databases/Products
+      dockerfile: Dockerfile
+    container_name: products-db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - my_network
+
+
+  
+networks:
+  my_network:
+    driver: bridge

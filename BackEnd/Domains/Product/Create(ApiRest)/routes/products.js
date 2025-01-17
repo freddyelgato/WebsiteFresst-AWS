@@ -1,91 +1,74 @@
 const express = require('express');
-const fs = require('fs');
+const fs = require('fs').promises; // Usamos fs.promises para utilizar async/await
 const path = require('path');
 const multer = require('multer');
+const { v4: uuidv4 } = require('uuid'); // Para generar IDs únicos
 const router = express.Router();
 
 // Configuración de multer para manejar las imágenes subidas
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../APIs/ApiRest/ProductsApiRest/uploads'));  // Carpeta 'uploads' dentro de ProductsApiRest
+    cb(null, path.join(__dirname, '../../uploads')); // Carpeta 'uploads' dentro de Product
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));  // Renombrar archivo para evitar conflictos
+    cb(null, Date.now() + path.extname(file.originalname)); // Renombrar archivo para evitar conflictos
   }
 });
 const upload = multer({ storage: storage });
 
-// Ruta para obtener todos los productos
-router.get('/', (req, res) => {  // Cambié '/products' a '/' 
-    const productsPath = path.join(__dirname, '../../../../databases/products.json');
-    fs.readFile(productsPath, 'utf8', (err, data) => {
-      if (err) return res.status(500).send('Error reading products data');
-      res.json(JSON.parse(data));
-    });
-  });
-  
 // Ruta para agregar un nuevo producto
-router.post('/products', upload.single('image'), (req, res) => {
-  const newProduct = req.body;
-  if (req.file) {
-    newProduct.imageUrl = 'uploads/' + req.file.filename;  // Guardar la ruta de la imagen en el producto
-  } else {
-    return res.status(400).send('No image uploaded');
-  }
-  const productsPath = path.join(__dirname, '../../databases/productDatabase/products.json');
-  fs.readFile(productsPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).send('Error reading products data');
-    const products = JSON.parse(data);
-    newProduct.id = products.length + 1;  // Asigna un ID único
-    products.push(newProduct);
-    fs.writeFile(productsPath, JSON.stringify(products, null, 2), (err) => {
-      if (err) return res.status(500).send('Error saving new product');
-      res.status(201).json(newProduct);
-    });
-  });
-});
-
-// Ruta para actualizar un producto
-router.put('/products/:id', upload.single('image'), (req, res) => {
-  const { id } = req.params;
-  const updatedProduct = req.body;
-  const productsPath = path.join(__dirname, '../../databases/productDatabase/products.json');
-  fs.readFile(productsPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).send('Error reading products data');
-    const products = JSON.parse(data);
-    const productIndex = products.findIndex(p => p.id == id);
-    if (productIndex === -1) return res.status(404).send('Product not found');
-    if (req.file) {
-      const oldImagePath = path.join(__dirname, '../../', products[productIndex].imageUrl);
-      fs.unlinkSync(oldImagePath);  // Eliminar la imagen antigua
-      updatedProduct.imageUrl = 'uploads/' + req.file.filename;  // Asignar la nueva imagen
+router.post('/', upload.single('image'), async (req, res) => {
+  try {
+    // Validamos que la imagen esté presente
+    if (!req.file) {
+      return res.status(400).json({ status: 'error', message: 'No image uploaded' });
     }
-    products[productIndex] = { ...products[productIndex], ...updatedProduct };
-    fs.writeFile(productsPath, JSON.stringify(products, null, 2), (err) => {
-      if (err) return res.status(500).send('Error saving updated product');
-      res.json(products[productIndex]);
-    });
-  });
+
+    // Validamos que el cuerpo del producto tenga datos básicos
+    const { name, price, category } = req.body;
+    if (!name || !price || !category) {
+      return res.status(400).json({ status: 'error', message: 'Product name, price, and category are required' });
+    }
+
+    // Leemos el archivo de productos
+    const productsPath = path.join(__dirname, '../../../../databases/Products/products.json');
+    const data = await fs.readFile(productsPath, 'utf8');
+    const products = JSON.parse(data);
+
+    // Calcular el próximo ID
+    const nextId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+
+    const newProduct = {
+      id: uuidv4(), // Genera un ID único
+      name,
+      price: parseFloat(price),
+      category,
+      imageUrl: 'uploads/' + req.file.filename,
+    };
+    
+    /*
+    // Crear el nuevo producto
+    const newProduct = {
+      id: nextId, // Asignar el ID incremental
+      name,
+      price: parseFloat(price), // Aseguramos que el precio sea un número
+      category,
+      imageUrl: 'uploads/' + req.file.filename, // Ruta de la imagen
+    };*/
+
+    // Añadimos el nuevo producto al array
+    products.push(newProduct);
+
+    // Escribimos los nuevos datos en el archivo de productos
+    await fs.writeFile(productsPath, JSON.stringify(products, null, 2));
+
+    // Respondemos con el producto creado
+    res.status(201).json({ status: 'success', message: 'Product created', product: newProduct });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: 'error', message: 'Error processing the product' });
+  }
 });
 
-// Ruta para eliminar un producto
-router.delete('/products/:id', (req, res) => {
-  const { id } = req.params;
-  const productsPath = path.join(__dirname, '../../databases/productDatabase/products.json');
-  fs.readFile(productsPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).send('Error reading products data');
-    let products = JSON.parse(data);
-    const product = products.find(p => p.id == id);
-    if (!product) return res.status(404).send('Product not found');
-    // Eliminar la imagen asociada al producto
-    const imagePath = path.join(__dirname, '../../', product.imageUrl);
-    fs.unlinkSync(imagePath);  // Eliminar la imagen del sistema de archivos
-    products = products.filter(p => p.id != id);
-    fs.writeFile(productsPath, JSON.stringify(products, null, 2), (err) => {
-      if (err) return res.status(500).send('Error deleting product');
-      res.status(204).send();
-    });
-  });
-});
-
-module.exports = router;  // Exportar el router
+module.exports = router; // Exportar el router

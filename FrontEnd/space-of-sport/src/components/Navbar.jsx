@@ -89,6 +89,13 @@ function Navbar() {
                 Cart
               </Link>
             </li>
+
+            {/* Opción ProductsAdmin */}
+            <li className="nav-item">
+              <Link href="/Products" className="nav-link">
+                Products Admin
+              </Link>
+            </li>
           </ul>
 
           {/* Formulario de búsqueda con el botón verde */}
