@@ -44,7 +44,7 @@ if (!fs.existsSync(databasePath)) {
 
 // Rutas
 const productsRoutes = require('./routes/products'); // Correcta ubicación del archivo products.js
-app.use('/api/products', productsRoutes);
+app.use('/api/create', productsRoutes);
 
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {

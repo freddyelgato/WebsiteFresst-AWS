@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const cors = require('cors');
 
 const app = express();
@@ -8,18 +7,18 @@ const app = express();
 // Configuración de CORS
 app.use(cors({
     origin: "http://localhost:3000",
-    methods: ["PUT"],
+    methods: ["GET"],
 }));
 
 // Middleware
 app.use(bodyParser.json());
 
 // Rutas
-const editRoutes = require('./routes/edit');
-app.use('/api/edit', editRoutes);
+const searchRoutes = require('./routes/search');
+app.use('/api/products', searchRoutes);
 
 // Configuración del servidor
-const PORT = 4002; // Puerto exclusivo para este microservicio
+const PORT = 4003; // Puerto exclusivo para este microservicio
 app.listen(PORT, () => {
-    console.log(`Edit Products microservice running on http://localhost:${PORT}`);
+    console.log(`Search Products microservice running on http://localhost:${PORT}`);
 });

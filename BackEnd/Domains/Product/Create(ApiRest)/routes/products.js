@@ -1,8 +1,11 @@
+// Importamos los módulos necesarios
 const express = require('express');
-const fs = require('fs').promises; // Usamos fs.promises para utilizar async/await
-const path = require('path');
+const mongoose = require('mongoose');
 const multer = require('multer');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid'); // Para generar IDs únicos
+require('dotenv').config(); // Para cargar las variables de entorno
+
 const router = express.Router();
 
 // Configuración de multer para manejar las imágenes subidas
@@ -15,6 +18,22 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
+
+// Conexión a MongoDB
+mongoose.connect(process.env.MONGO_URI, { // Agregar el nombre de la base de datos
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log('Connected to MongoDB')).catch(err => console.error('MongoDB connection error:', err));
+
+// Definimos el esquema y modelo de producto
+const productSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  category: { type: String, required: true },
+  imageUrl: { type: String, required: true },
+}, { collection: 'products', timestamps: true }); // Especificar la colección
+
+const Product = mongoose.model('Product', productSchema);
 
 // Ruta para agregar un nuevo producto
 router.post('/', upload.single('image'), async (req, res) => {
@@ -30,40 +49,19 @@ router.post('/', upload.single('image'), async (req, res) => {
       return res.status(400).json({ status: 'error', message: 'Product name, price, and category are required' });
     }
 
-    // Leemos el archivo de productos
-    const productsPath = path.join(__dirname, '../../../../databases/Products/products.json');
-    const data = await fs.readFile(productsPath, 'utf8');
-    const products = JSON.parse(data);
-
-    // Calcular el próximo ID
-    const nextId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-
-    const newProduct = {
-      id: uuidv4(), // Genera un ID único
+    // Creamos un nuevo producto
+    const newProduct = new Product({
       name,
       price: parseFloat(price),
       category,
-      imageUrl: 'uploads/' + req.file.filename,
-    };
-    
-    /*
-    // Crear el nuevo producto
-    const newProduct = {
-      id: nextId, // Asignar el ID incremental
-      name,
-      price: parseFloat(price), // Aseguramos que el precio sea un número
-      category,
-      imageUrl: 'uploads/' + req.file.filename, // Ruta de la imagen
-    };*/
+      imageUrl: 'http://localhost:4000/uploads/' + req.file.filename,
+    });
 
-    // Añadimos el nuevo producto al array
-    products.push(newProduct);
-
-    // Escribimos los nuevos datos en el archivo de productos
-    await fs.writeFile(productsPath, JSON.stringify(products, null, 2));
+    // Guardamos el producto en la base de datos
+    const savedProduct = await newProduct.save();
 
     // Respondemos con el producto creado
-    res.status(201).json({ status: 'success', message: 'Product created', product: newProduct });
+    res.status(201).json({ status: 'success', message: 'Product created', product: savedProduct });
 
   } catch (err) {
     console.error(err);
@@ -71,4 +69,4 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-module.exports = router; // Exportar el router
+module.exports = router;
