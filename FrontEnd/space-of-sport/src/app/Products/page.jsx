@@ -62,25 +62,32 @@ const ProductsPage = () => {
       formDataWithImage.append('name', formData.name);
       formDataWithImage.append('category', formData.category);
       formDataWithImage.append('price', formData.price);
-      formDataWithImage.append('image', formData.image);
+  
+      // Si hay una imagen seleccionada, se adjunta
+      if (formData.image) {
+        formDataWithImage.append('image', formData.image);
+      }
+  
       const method = selectedProduct ? 'PUT' : 'POST';
       const url = selectedProduct
         ? `http://localhost:4002/api/edit/${selectedProduct._id}` // Microservicio de Edit en el puerto 4002
         : 'http://localhost:4000/api/create'; // Microservicio de Create en el puerto 4000
-
+  
       const response = await fetch(url, {
         method,
         body: formDataWithImage,
       });
-
+  
       if (response.ok) {
         const updatedProduct = await response.json();
         setProducts((prevProducts) => {
           if (selectedProduct) {
+            // Si estamos editando, actualizamos el producto en el estado
             return prevProducts.map((product) =>
-              product.id === updatedProduct.id ? updatedProduct : product
+              product._id === updatedProduct._id ? updatedProduct : product
             );
           } else {
+            // Si estamos creando, agregamos el nuevo producto
             return [...prevProducts, updatedProduct.product];
           }
         });
@@ -92,6 +99,8 @@ const ProductsPage = () => {
       console.error('Error saving product:', error);
     }
   };
+  
+
 
   // Buscar productos
   const handleSearchProducts = async (query) => {

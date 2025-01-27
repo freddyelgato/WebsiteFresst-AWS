@@ -33,6 +33,8 @@ const upload = multer({ storage: storage });
 app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'))); // Carpeta para imágenes
 
+
+/*
 // Base de datos (archivo JSON)
     const databasePath = path.join(__dirname, '../../../databases/Products/products.json');
 console.log('Database path:', databasePath);  // Verifica que la ruta sea correcta.
@@ -40,7 +42,7 @@ console.log('Database path:', databasePath);  // Verifica que la ruta sea correc
 // Verifica si el archivo de la base de datos existe; si no, lo crea
 if (!fs.existsSync(databasePath)) {
     fs.writeFileSync(databasePath, JSON.stringify([]));
-}
+}*/
 
 // Rutas
 const productsRoutes = require('./routes/products'); // Correcta ubicación del archivo products.js
