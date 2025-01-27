@@ -17,6 +17,9 @@ const HomePage = () => {
             Ir al Carrito
           </a>
         </div>
+        <div>
+            <a href="/login">Ir a Login</a>
+        </div>
       </main>
     </div>
   );
