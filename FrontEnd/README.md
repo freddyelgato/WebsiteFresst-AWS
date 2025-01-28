@@ -1,1 +1,0 @@
-# View of the E-Commerce
