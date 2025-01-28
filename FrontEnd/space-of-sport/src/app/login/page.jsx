@@ -65,32 +65,73 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
-            <h1>Iniciar Sesión</h1>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Contraseña:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
-                </button>
-            </form>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', width: '400px', backgroundColor: '#fff' }}>
+          <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Iniciar Sesión</h1>
+          <form onSubmit={handleLogin}>
+            <div style={{ marginBottom: '15px' }}>
+              <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>Email:</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                  boxSizing: 'border-box',
+                  fontSize: '16px'
+                }}
+              />
+            </div>
+            <div style={{ marginBottom: '15px' }}>
+              <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>Contraseña:</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                  boxSizing: 'border-box',
+                  fontSize: '16px'
+                }}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              style={{
+                width: '100%',
+                padding: '14px',
+                backgroundColor: '#007BFF',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '16px',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease'
+              }}
+            >
+              {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
+            </button>
+          </form>
+          <p style={{ textAlign: 'center', marginTop: '15px' }}>
+            ¿No tienes una cuenta aún?{' '}
+            <a href="/registro" style={{ color: '#007BFF', textDecoration: 'none' }}>
+              Regístrate
+            </a>
+          </p>
         </div>
+      </div>
+      
     );
 };
 
