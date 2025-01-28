@@ -84,7 +84,7 @@ const ProductsPage = () => {
           if (selectedProduct) {
             // Si estamos editando, actualizamos el producto en el estado
             return prevProducts.map((product) =>
-              product._id === updatedProduct._id ? updatedProduct : product
+              product._id === updatedProduct.product._id ? updatedProduct.product : product
             );
           } else {
             // Si estamos creando, agregamos el nuevo producto

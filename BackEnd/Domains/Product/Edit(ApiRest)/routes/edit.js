@@ -74,7 +74,7 @@ router.put('/:_id', upload.single('image'), async (req, res) => {
             }
 
             // Actualizar la URL de la nueva imagen
-            updateData.imageUrl = 'http://localhost:4002/uploads/' + req.file.filename;
+            updateData.imageUrl = 'http://localhost:4000/uploads/' + req.file.filename;
         } else {
             // Si no se sube una nueva imagen, mantenemos la imagen existente
             updateData.imageUrl = product.imageUrl;
