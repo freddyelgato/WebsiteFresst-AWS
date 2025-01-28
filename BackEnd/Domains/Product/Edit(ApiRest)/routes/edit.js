@@ -13,11 +13,10 @@ mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true
 }).then(() => {
     console.log('Connected to MongoDB');
-})
-  .catch(err => {
+}).catch(err => {
     console.error('MongoDB connection error:', err);
     process.exit(1); // Asegura que el servidor no inicie si no se puede conectar a MongoDB
-  });
+});
 
 // Definimos el esquema y modelo de producto
 const productSchema = new mongoose.Schema({
@@ -32,7 +31,7 @@ const Product = mongoose.model('Product', productSchema);
 // Configuración de multer para manejo de imágenes
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './uploads'); // Carpeta para almacenar imágenes
+        cb(null, path.join(__dirname, '../../uploads')); // Carpeta 'uploads' dentro de Product
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -41,7 +40,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.put('/:_id', upload.single('image'), async (req, res) => {
-    console.log("Request received")
+    console.log("Request received");
     try {
         const productId = req.params._id;  // Aquí recogemos el _id de la URL
         console.log("Editing product with _id:", productId);
@@ -64,14 +63,18 @@ router.put('/:_id', upload.single('image'), async (req, res) => {
         if (req.file) {
             // Eliminar la imagen anterior si existe
             if (product.imageUrl) {
-                const oldImagePath = path.join(__dirname, '..', 'uploads', product.imageUrl.split('/').pop());
+                const oldImagePath = path.join(__dirname, '../../uploads', product.imageUrl.split('/').pop());
                 fs.unlink(oldImagePath, (err) => {
-                    if (err) console.error('Error deleting old image:', err);
+                    if (err) {
+                        console.error('Error deleting old image:', err);
+                    } else {
+                        console.log('Old image deleted successfully');
+                    }
                 });
             }
 
             // Actualizar la URL de la nueva imagen
-            updateData.imageUrl = 'uploads/' + req.file.filename;
+            updateData.imageUrl = 'http://localhost:4002/uploads/' + req.file.filename;
         } else {
             // Si no se sube una nueva imagen, mantenemos la imagen existente
             updateData.imageUrl = product.imageUrl;
