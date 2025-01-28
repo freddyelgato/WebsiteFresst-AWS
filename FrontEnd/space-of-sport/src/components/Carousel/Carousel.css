@@ -1,0 +1,56 @@
+/* Estilo base para el contenedor del carrusel */
+.carousel {
+    max-width: 100%;
+    margin: 0 auto; /* Centrar el carrusel */
+  }
+  
+  /* Estilo para las imágenes */
+  .carousel img {
+    border-radius: 10px; /* Bordes redondeados */
+    object-fit: cover; /* Ajustar la imagen al contenedor */
+    max-height: 500px; /* Altura máxima de las imágenes */
+  }
+  
+  /* Indicadores (puntos) personalizados */
+  .carousel-indicators button {
+    background-color: #007bff; /* Color azul */
+    border: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+  
+  .carousel-indicators .active {
+    background-color: #0056b3; /* Color más oscuro para el indicador activo */
+    opacity: 1;
+  }
+  
+  /* Controles de navegación personalizados */
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .carousel-control-prev-icon:hover,
+  .carousel-control-next-icon:hover {
+    background-color: #007bff; /* Cambiar el fondo al pasar el mouse */
+  }
+  
+  /* Texto de accesibilidad */
+  .carousel .visually-hidden {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  /* Ajustes para dispositivos pequeños */
+  @media (max-width: 768px) {
+    .carousel img {
+      max-height: 300px; /* Reducir la altura de las imágenes en pantallas pequeñas */
+    }
+  }
+  

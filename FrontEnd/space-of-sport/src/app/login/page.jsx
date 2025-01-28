@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -16,11 +17,18 @@ const LoginPage = () => {
             });
             const data = await response.json();
             if (response.ok) {
-                localStorage.setItem('token', data.token);
+                Cookies.set('token', data.token); // Guarda el token en cookies
                 setMessage(data.message);
-                window.location.href = data.role === 'admin' ? '/admin' : '/user';
+                if (data.role === 'admin') {
+                    window.location.href = '/admin';
+                } else if (data.role === 'user') {
+                    window.location.href = '/user';
+                } else {
+                    setMessage('Rol no reconocido'); // Manejo de errores en caso de un rol inesperado
+                }
+                //window.location.href = data.role === 'admin' ? '/admin' : '/user'; // Redirige según el rol
             } else {
-                setMessage(data.message);
+                setMessage(data.message); // Muestra mensaje de error
             }
         } catch (error) {
             setMessage('Error al iniciar sesión');
