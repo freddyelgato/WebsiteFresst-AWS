@@ -1,12 +1,4 @@
-[{
-	"_id": {
-	  "$oid": "6799b010f2809fbf38d3192d"
-	},
-	"Message": "Pong",
-	"Greeting": {
-	  "Hello": "Hello World"
-	}
-  },
+[
   {
 	"_id": {
 	  "$oid": "6799b1274c7c9957c202b5e2"
@@ -30,18 +22,7 @@
 	"TotalAmount": 189.97,
 	"Status": "Pending"
   },
-  {
-	"_id": {
-	  "$oid": "6799ec5da05d65ff3aad799f"
-	},
-	"CreatedAt": "",
-	"UpdatedAt": "",
-	"ID": "",
-	"CustomerID": "",
-	"Item": null,
-	"TotalAmount": 0,
-	"Status": ""
-  },
+ 
   {
 	"_id": {
 	  "$oid": "6799ec6dd51ca84c789f67da"
