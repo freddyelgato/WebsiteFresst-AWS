@@ -45,8 +45,8 @@ jobs:
       - name: Build and push on Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./BackEnd/Domains/Product/Product_Search
-          file: ./BackEnd/Domains/Product/Product_Search/Dockerfile
+          context: ./BackEnd/Domains/Product/Product_Search(GraphQL)
+          file: ./BackEnd/Domains/Product/Product_Search(GraphQL)/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/get-product:latest
 
