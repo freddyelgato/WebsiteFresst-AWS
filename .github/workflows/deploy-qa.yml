@@ -61,5 +61,5 @@ jobs:
               sudo docker rm get-product || echo "No existing process found"
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/get-product:latest
               sudo docker run -d -p 80:4003 --name get-product \
-                -e MONGO_URI=mongodb://user:password@172.31.30.195:27017 \
+                -e MONGO_URI=mongodb://3.85.210.176:27017 \
                 ${{ secrets.DOCKER_USERNAME }}/get-product
