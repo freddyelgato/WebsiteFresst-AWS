@@ -24,7 +24,7 @@ services:
     container_name: get-order
     environment:
       - GIN_MODE=release
-      - orders_URI=mongodb://user:password@orders-db:27017
+      - orders_URI=mongodb://user:password@172.31.30.195:27017
     volumes:
       - .:/app
     networks:

@@ -21,8 +21,8 @@ jobs:
       - name: Build and push on Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./BackEnd/dataBases/Products
-          file: ./BackEnd/dataBases/Products/Dockerfile
+          context: ./BackEnd/databases/Products
+          file: ./BackEnd/databases/Products/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/products-db:latest
 
@@ -61,5 +61,5 @@ jobs:
               sudo docker rm get-product || echo "No existing process found"
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/get-product:latest
               sudo docker run -d -p 80:4003 --name get-product \
-                -e MONGO_URI=${{ secrets.MONGO_URI }} \
+                -e MONGO_URI=mongodb://user:password@172.31.30.195:27017 \
                 ${{ secrets.DOCKER_USERNAME }}/get-product
