@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"net/http"
-	"github.com/gin-gonic/gin"
 	requests "edit-order/data/requests"
-	responses "edit-order/data/responses" 
+	responses "edit-order/data/responses"
 	services "edit-order/service"
-	
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type EditOrderController struct {
@@ -24,7 +24,7 @@ func (ctrl *EditOrderController) EditOrder(c *gin.Context) {
 	if err := c.BindJSON(&request); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, responses.EditOrderResponse{Message: "Invalid request body"})
 		return
-		}
+	}
 
 	status, res := ctrl.EditOrderService.EditOrderHandler(request)
 
