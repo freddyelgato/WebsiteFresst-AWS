@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
+
         <main>{children}</main>
         <footer>
           <p>© 2025 Space of Sport - Todos los derechos reservados.</p>

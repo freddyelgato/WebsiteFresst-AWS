@@ -1,12 +1,16 @@
 // src/app/index.jsx
 import React from 'react';
 import styles from '../styles/StartPageModule.css';
+import Navbar from "../components/Navbar";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 const HomePage = () => {
   return (
     <div>
       {/* Main Content */}
       <main className={styles.main}>
+      <Navbar />
         <h1>¡Bienvenido a Space of Sport!</h1>
         <p>Encuentra los mejores productos deportivos en un solo lugar.</p>
         <div className={styles.buttons}>
