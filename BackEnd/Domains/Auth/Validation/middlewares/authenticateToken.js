@@ -1,25 +1,18 @@
-// Ruta: ./middlewares/authenticateToken.js
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const tokenBlacklist = require('../utils/tokenBlacklist');
 
-const SECRET_KEY = 'tu_secreto_super_seguro'; // Asegúrate de usar la misma clave en ambos servicios
+module.exports = (req, res, next) => {
+    const token = req.header('Authorization')?.split(' ')[1];
 
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ message: 'Token requerido' });
+    if (!token || tokenBlacklist.isBlacklisted(token)) {
+        return res.status(403).json({ message: 'Acceso denegado' });
     }
 
-    jwt.verify(token, SECRET_KEY, (err, user) => {
-        if (err) {
-            console.error('Error en jwt.verify:', err.message); // Para depuración
-            return res.status(403).json({ message: 'Token inválido' });
-        }
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: 'Token inválido' });
 
-        req.user = user; // Adjunta los datos del token al request
+        req.user = user;
         next();
     });
 };
-
-module.exports = authenticateToken;

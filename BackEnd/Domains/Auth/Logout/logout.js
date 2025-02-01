@@ -1,31 +1,30 @@
-const jwt = require('jsonwebtoken');
+const express = require('express');
+const axios = require('axios');
+const router = express.Router();
 
-// Generar una clave secreta (para desarrollo o pruebas)
-const SECRET_KEY = 'tu_secreto_super_seguro';
 
-// Verificar el token con la clave secreta generada
-const handleLogout = (req, res) => {
-    //const authHeader = req.headers['authorization'];
-    //const token = authHeader && authHeader.split(' ')[1];
-    const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
+// Ruta para logout
+router.post('/', async (req, res) => {
+    const token = req.header('Authorization')?.split(' ')[1]; // Obtener el token del header
+    console.log("Token recibido en Logout:", token);
 
     if (!token) {
-        return res.status(401).json({ message: 'Token requerido para cerrar sesión' });
+        return res.status(400).json({ message: 'Token requerido' });
     }
+
     try {
-        // Verificar el token
-        jwt.verify(token, SECRET_KEY, (err, decoded) => {
-            if (err) {
-                return res.status(400).json({ message: 'Token inválido o ya expirado' });
-            }
-            // Aquí puedes continuar con el logout si el token es válido
-            // Agregar a la lista negra o eliminar el token
-            return res.status(200).json({ message: 'Sesión cerrada exitosamente' });
-        });
+        // Notificar al servicio de Validación para revocar el token
+        const response = await axios.post('http://localhost:3003/validation/revoke', { token });
 
+        if (response.status === 200) {
+            return res.json({ message: 'Logout exitoso' });
+        } else {
+            return res.status(500).json({ message: 'Error al revocar el token' });
+        }
     } catch (error) {
-        return res.status(400).json({ message: 'Token inválido o ya expirado' });
+        console.error('Error al cerrar sesión:', error.response?.data || error.message);
+        return res.status(500).json({ message: 'Error al cerrar sesión' });
     }
-};
+});
 
-module.exports = { handleLogout };
+module.exports = router;

@@ -1,7 +1,15 @@
 const express = require('express');
-const { validateHandler } = require('../validation');
+const validationController = require('../validation');
+
 const router = express.Router();
 
-router.post('/', validateHandler);
+// Ruta para autenticar credenciales
+router.post('/authenticate', validationController);
+
+// Ruta para validar un token
+router.post('/validate', validationController);
+
+// Ruta para revocar un token
+router.post('/revoke', validationController);
 
 module.exports = router;

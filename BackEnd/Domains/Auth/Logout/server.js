@@ -1,16 +1,19 @@
 const express = require('express');
 const cors = require('cors');
-const logoutRoutes = require('./routesLogout/routes'); // Importar correctamente las rutas de logout
-//require('dotenv').config(); // Cargar variables de entorno
+const routes = require('./routesLogout/routes');
+require('dotenv').config();
 
 const app = express();
+app.use(cors({
+    origin: 'http://localhost:3000', // URL del frontend
+    credentials: true
+}));
+
 app.use(express.json());
-app.use(cors());
 
-// Registrar las rutas de logout
-app.use('/logout', logoutRoutes); // Aquí se debe usar 'logoutRoutes'
+app.use('/logout', routes);
 
-const PORT = 3003;
+const PORT = process.env.PORT_LOGOUT || 3002;
 app.listen(PORT, () => {
-    console.log(`Logout service running on http://localhost:${PORT}`);
+    console.log(`Logout Service running on port ${PORT}`);
 });

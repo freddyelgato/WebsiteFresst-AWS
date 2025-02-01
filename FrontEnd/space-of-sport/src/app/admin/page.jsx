@@ -20,12 +20,13 @@ const AdminPage = () => {
         <ProtectedPage role="admin">
         <h1>Bienvenido al Panel de Admin</h1>
         <CardGrid />
-            <nav>
-                <Link href="/logout">
-                   
-                    <button onClick={handleLogout} className="px-4 py-2 bg-red-500 text-white rounded"></button>
-                </Link>
-            </nav>
+        <nav>
+    <Link href="/logout">
+        <button onClick={handleLogout} className="px-4 py-2 bg-blue-600 text-black rounded hover:bg-blue-700">
+            Cerrar sesión
+        </button>
+    </Link>
+</nav>
         </ProtectedPage>
 
     );

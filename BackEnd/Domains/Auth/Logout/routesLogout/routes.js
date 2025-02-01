@@ -1,7 +1,9 @@
 const express = require('express');
-const { handleLogout } = require('../logout');
+const logoutController = require('../logout');
+
 const router = express.Router();
 
-router.post('/', handleLogout);
+// Ruta para cerrar sesión
+router.post('/', logoutController);
 
 module.exports = router;

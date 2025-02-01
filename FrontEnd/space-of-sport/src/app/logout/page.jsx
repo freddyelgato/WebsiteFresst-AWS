@@ -1,73 +1,75 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import jwt from 'jsonwebtoken';  // Asegúrate de tener jwt-decode instalado
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const LogoutPage = () => {
-    const router = useRouter(); // Usar el hook de next/navigation
+    const router = useRouter();
 
-    // Función para verificar si el token ha expirado
-    const isTokenExpired = (token) => {
-        if (!token) return true; // Si no hay token, se considera expirado
-        const decodedToken = jwt.decode(token);
-        return decodedToken.exp < Date.now() / 1000;  // Compara la fecha de expiración
-    };
+    useEffect(() => {
+        const token = Cookies.get('token');
 
-    const handleLogout = async () => {
-        const token = Cookies.get('token'); // Obtener el token de las cookies
-
-        if (!token || isTokenExpired(token)) {
-            console.error('Token no válido o expirado, cerrando sesión...');
-            alert('El token ha expirado o no es válido. Inicie sesión nuevamente.');
-            Cookies.remove('token');  // Eliminar el token de las cookies
-            router.push('/login');  // Redirigir al login
+        if (!token) {
+            // Si no hay token, redirigir al login
+            router.push('/login');
             return;
         }
 
-        try {
-            // Enviar la solicitud de logout con el token en el encabezado Authorization
-            const response = await axios.post(
-                'http://localhost:3003/logout', 
-                {}, // Cuerpo vacío si solo necesitas el token
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}` // Agregar el token al encabezado
-                    },
+        const handleLogout = async () => {
+            try {
+                // Enviar la solicitud de logout al backend
+                const response = await axios.post('http://localhost:3002/logout', {}, {
+                    headers: { Authorization: `Bearer ${token}` },
+                    withCredentials: true
+                });
+
+                if (response.status === 200) {
+                    // Eliminar las cookies y redirigir al login
+                    Cookies.remove('token');
+                    Cookies.remove('role');
+                    alert('Sesión cerrada exitosamente.');
+                    router.push('/login');
                 }
-            );
+            } catch (error) {
+                // Manejar el error si no se puede cerrar sesión
+                console.error('Error al cerrar sesión:', error.response?.data?.message || error.message);
 
-            // Si el logout es exitoso, eliminar el token y redirigir al login
-            console.log(response.data.message); // Mensaje del servidor
-            alert('Sesión cerrada correctamente');
+                if (error.response) {
+                    // Manejo de errores del servidor
+                    switch (error.response.status) {
+                        case 400:
+                            alert('Token inválido. Por favor, inicia sesión nuevamente.');
+                            break;
+                        case 401:
+                            alert('No autorizado. Por favor, inicia sesión nuevamente.');
+                            break;
+                        case 500:
+                            alert('Error en el servidor. Por favor, intenta de nuevo más tarde.');
+                            break;
+                        default:
+                            alert('Error desconocido: ' + error.response.data.message);
+                    }
+                } else if (error.request) {
+                    alert('Error en la solicitud. No se recibió respuesta del servidor.');
+                } else {
+                    alert('Error desconocido: ' + error.message);
+                }
 
-            // Eliminar el token de las cookies
-            Cookies.remove('token');
+                // Redirigir al login incluso si hay errores
+                router.push('/login');
+            }
+        };
 
-            // Redirigir al login
-            router.push('/login');
-
-        } catch (error) {
-            // Manejar el error si no se puede cerrar sesión
-            console.error('Error al cerrar sesión:', error.response?.data?.message || error.message);
-            alert('Hubo un problema al cerrar sesión. Intenta de nuevo.');
-            router.push('/login'); // Redirigir al login incluso si hay errores
-        }
-    };
-
-    useEffect(() => {
-        handleLogout();  // Ejecutar el logout cuando el componente se monta
-    }, []);
+        handleLogout();
+    }, [router]);
 
     return (
-        <div>
-            <h1>Logout</h1>
-            <button onClick={handleLogout}>Cerrar sesión</button>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <p>Cerrando sesión...</p>
         </div>
     );
 };
 
 export default LogoutPage;
-

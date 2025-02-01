@@ -1,50 +1,64 @@
-const axios = require('axios');
+const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const axios = require('axios');
+const { Pool } = require('pg');
+require('dotenv').config();
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
-const SECRET_KEY = 'tu_secreto_super_seguro'; // Asegúrate de que coincida con el servicio de validación
+const router = express.Router();
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-const loginHandler = async (req, res) => {
+router.post('/', async (req, res) => {
     const { email, password } = req.body;
+    console.log("Email recibido:", email);
+    console.log("Password recibido:", password);
+
+    // Validar que los campos email y password estén presentes
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Email y contraseña son requeridos' });
+    }
 
     try {
-        // Verifica las credenciales internamente
-        let role;
-        if (email === 'admin@example.com' && password === 'admin123') {
-            role = 'admin';
-        } else if (email === 'user@example.com' && password === 'user123') {
-            role = 'user';
-        } else {
+        // Consultar el usuario en la base de datos por su email
+        const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        const user = userResult.rows[0];
+
+        // Si no se encuentra el usuario
+        if (!user) {
+            return res.status(401).json({ message: 'Credenciales incorrectas' });
+        }
+
+        // Comparar la contraseña proporcionada con la contraseña hasheada en la base de datos
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        console.log("¿Contraseña coincide?:", passwordMatch);
+
+        // Si las contraseñas no coinciden
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Credenciales incorrectas' });
+        }
+
+        // Verificar las credenciales con el servicio de validación
+        const validationResponse = await axios.post('http://localhost:3003/validation/authenticate', {
+            email,
+            password,
+        });
+
+        // Si el servicio de validación devuelve un error
+        if (!validationResponse.data.valid) {
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
-        // Genera el token
-        const token = jwt.sign({ role, email }, SECRET_KEY, { expiresIn: '3m' });
+        // Generar el JWT
+        const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        console.log("Token generado:", token);
 
-        // Envía una solicitud al servicio de validación
-        const validationResponse = await axios.post(
-            'http://localhost:3002/validate',
-            { email, role },
-            { headers: { Authorization: `Bearer ${token}` } } // Agrega el token al encabezado
-        );
-
-        if (validationResponse.status === 200) {
-            return res.json({
-                message: `Bienvenido ${role === 'admin' ? 'Admin' : 'Usuario'}`,
-                token,
-                role,
-            });
-        }
+        // Enviar la respuesta con el token y el rol del usuario
+        res.json({ token, role: user.role });
     } catch (error) {
-        if (error.response) {
-            console.error('Error en validación:', error.response.data); // Depuración
-            return res
-                .status(error.response.status)
-                .json({ message: error.response.data.message });
-        } else {
-            console.error('Error en validación:', error.message); // Error de red u otro
-            return res.status(500).json({ message: 'Error al validar usuario' });
-        }
+        console.error("Error en el login:", error);
+        res.status(500).json({ message: 'Error en el servidor' });
     }
-};
+});
 
-module.exports = { loginHandler };
+module.exports = router;
