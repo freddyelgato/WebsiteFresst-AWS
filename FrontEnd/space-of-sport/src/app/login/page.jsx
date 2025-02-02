@@ -151,7 +151,7 @@ const LoginPage = () => {
                 </form>
                 <p style={{ textAlign: 'center', marginTop: '15px' }}>
                     ¿No tienes una cuenta aún?{' '}
-                    <a href="/registro" style={{ color: '#007BFF', textDecoration: 'none' }}>
+                    <a href="/register" style={{ color: '#007BFF', textDecoration: 'none' }}>
                         Regístrate
                     </a>
                 </p>
