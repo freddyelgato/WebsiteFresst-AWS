@@ -155,8 +155,31 @@ const LoginPage = () => {
                         Regístrate
                     </a>
                 </p>
+                {/* Botón "Back to Home" dentro de la tarjeta */}
+                <button
+                    onClick={() => router.push('/')}
+                    style={{
+                        width: '100%',
+                        padding: '10px 20px',
+                        backgroundColor: '#28a745',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px',
+                        fontSize: '16px',
+                        cursor: 'pointer',
+                        marginTop: '15px', // Espacio entre el formulario y el botón
+                        transition: 'background-color 0.3s ease'
+                    }}
+                >
+                    Back to Home
+                </button>
             </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+            <script src="js/scripts.js"></script>
         </div>
+
     );
 };
 

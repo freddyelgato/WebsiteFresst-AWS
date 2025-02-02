@@ -114,8 +114,9 @@ const Navbar = () => {
           {/* Botón de Login alineado a la derecha */}
           <div className="ms-auto">
             <a href="/login" className="btn btn-outline-light">Login</a>
+            <a href="/register" className="btn btn-outline-light">Register</a>
           </div>
-
+          
         </div>
       </div>
     </nav>
