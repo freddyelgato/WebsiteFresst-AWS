@@ -5,5 +5,236 @@
     "category": "Clothing",
     "price": 20.99,
     "imageUrl": "http://localhost:4000/uploads/ts_d.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Running Shorts",
+    "category": "Clothing",
+    "price": 15.99,
+    "imageUrl": "http://localhost:4000/uploads/shorts_r.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Hoodie",
+    "category": "Clothing",
+    "price": 35.99,
+    "imageUrl": "http://localhost:4000/uploads/hoodie.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Track Pants",
+    "category": "Clothing",
+    "price": 28.99,
+    "imageUrl": "http://localhost:4000/uploads/track_pants.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Jacket",
+    "category": "Clothing",
+    "price": 49.99,
+    "imageUrl": "http://localhost:4000/uploads/jacket.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Gym Tank Top",
+    "category": "Clothing",
+    "price": 18.99,
+    "imageUrl": "http://localhost:4000/uploads/tank_top.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Compression Shirt",
+    "category": "Clothing",
+    "price": 22.99,
+    "imageUrl": "http://localhost:4000/uploads/compression_shirt.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Socks (Pack of 5)",
+    "category": "Clothing",
+    "price": 12.99,
+    "imageUrl": "http://localhost:4000/uploads/socks.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Gloves",
+    "category": "Clothing",
+    "price": 14.99,
+    "imageUrl": "http://localhost:4000/uploads/gloves.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Cap",
+    "category": "Clothing",
+    "price": 10.99,
+    "imageUrl": "http://localhost:4000/uploads/cap.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Running Shoes",
+    "category": "Footwear",
+    "price": 59.99,
+    "imageUrl": "http://localhost:4000/uploads/shoes_r.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Basketball Shoes",
+    "category": "Footwear",
+    "price": 79.99,
+    "imageUrl": "http://localhost:4000/uploads/shoes_b.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Hiking Boots",
+    "category": "Footwear",
+    "price": 99.99,
+    "imageUrl": "http://localhost:4000/uploads/boots_h.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Casual Sneakers",
+    "category": "Footwear",
+    "price": 45.99,
+    "imageUrl": "http://localhost:4000/uploads/sneakers.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Flip Flops",
+    "category": "Footwear",
+    "price": 9.99,
+    "imageUrl": "http://localhost:4000/uploads/flip_flops.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Football Cleats",
+    "category": "Footwear",
+    "price": 69.99,
+    "imageUrl": "http://localhost:4000/uploads/cleats.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Tennis Shoes",
+    "category": "Footwear",
+    "price": 75.99,
+    "imageUrl": "http://localhost:4000/uploads/tennis_shoes.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Cycling Shoes",
+    "category": "Footwear",
+    "price": 89.99,
+    "imageUrl": "http://localhost:4000/uploads/cycling_shoes.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Sandals",
+    "category": "Footwear",
+    "price": 25.99,
+    "imageUrl": "http://localhost:4000/uploads/sandals.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Waterproof Boots",
+    "category": "Footwear",
+    "price": 120.99,
+    "imageUrl": "http://localhost:4000/uploads/waterproof_boots.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Basketball",
+    "category": "Sports Equipment",
+    "price": 29.99,
+    "imageUrl": "http://localhost:4000/uploads/ball_b.jpg"
+  },
+  {
+    "id": 22,
+    "name": "Football",
+    "category": "Sports Equipment",
+    "price": 24.99,
+    "imageUrl": "http://localhost:4000/uploads/football.jpg"
+  },
+  {
+    "id": 23,
+    "name": "Tennis Racket",
+    "category": "Sports Equipment",
+    "price": 79.99,
+    "imageUrl": "http://localhost:4000/uploads/tennis_racket.jpg"
+  },
+  {
+    "id": 24,
+    "name": "Badminton Set",
+    "category": "Sports Equipment",
+    "price": 39.99,
+    "imageUrl": "http://localhost:4000/uploads/badminton.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Yoga Mat",
+    "category": "Sports Equipment",
+    "price": 24.99,
+    "imageUrl": "http://localhost:4000/uploads/yoga_m.jpg"
+  },
+  {
+    "id": 26,
+    "name": "Dumbbells (Pair)",
+    "category": "Sports Equipment",
+    "price": 49.99,
+    "imageUrl": "http://localhost:4000/uploads/dumbbells.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Boxing Gloves",
+    "category": "Sports Equipment",
+    "price": 35.99,
+    "imageUrl": "http://localhost:4000/uploads/boxing_gloves.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Skipping Rope",
+    "category": "Sports Equipment",
+    "price": 12.99,
+    "imageUrl": "http://localhost:4000/uploads/skipping_rope.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Golf Club Set",
+    "category": "Sports Equipment",
+    "price": 199.99,
+    "imageUrl": "http://localhost:4000/uploads/golf_clubs.jpg"
+  },
+  {
+    "id": 30,
+    "name": "Resistance Bands",
+    "category": "Sports Equipment",
+    "price": 15.99,
+    "imageUrl": "http://localhost:4000/uploads/resistance_bands.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Cycling Helmet",
+    "category": "Safety Gear",
+    "price": 34.99,
+    "imageUrl": "http://localhost:4000/uploads/helmet_c.jpg"
+  },
+  {
+    "id": 32,
+    "name": "Knee Pads",
+    "category": "Safety Gear",
+    "price": 22.99,
+    "imageUrl": "http://localhost:4000/uploads/knee_pads.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Elbow Guards",
+    "category": "Safety Gear",
+    "price": 19.99,
+    "imageUrl": "http://localhost:4000/uploads/elbow_guards.jpg"
+  },
+  {
+    "id": 34,
+    "name": "Mouthguard",
+    "category": "Safety Gear",
+    "price": 9.99,
+    "imageUrl": "http://localhost:4000/uploads/mouthguard.jpg"
   }
 ]

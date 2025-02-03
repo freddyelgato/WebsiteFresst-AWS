@@ -20,11 +20,6 @@ app.get('/', (req, res) => {
 // Middleware
 app.use(bodyParser.json());
 
-// Base de datos (archivo JSON)
-const databasePath = path.join(__dirname, '../../../databases/Products/products.json');
-if (!fs.existsSync(databasePath)) {
-    fs.writeFileSync(databasePath, JSON.stringify([]));
-}
 
 // Rutas
 const deleteRoutes = require('./routes/delete');

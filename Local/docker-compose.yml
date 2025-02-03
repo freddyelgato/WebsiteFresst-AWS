@@ -23,11 +23,15 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - MONGO_URI=mongodb://user:password@products-db:27018/spaceofsport_products?authSource=admin
+      - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
     networks:
       - my_network
-    depends_on: 
+    depends_on:
       - products-db
+    volumes:
+    - ../BackEnd/Domains/Product/uploads:/usr/src/app/uploads
+
+
 
 
   product-search:
@@ -38,12 +42,41 @@ services:
     ports:
       - "4003:4003"
     environment:
-      - MONGO_URI=mongodb://user:password@products-db:27018/spaceofsport_products?authSource=admin
+      - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
     networks:
       - my_network
     depends_on: 
       - products-db
 
+  delete-product:
+    build:
+      context: ../BackEnd/Domains/Product/Delete(ApiRest)
+      dockerfile: Dockerfile
+    container_name: delete-product-container
+    ports:
+      - "4001:4001"
+    environment:
+      - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
+    networks:
+      - my_network
+    depends_on: 
+      - products-db
+
+  edit-product:
+      build:
+        context: ../BackEnd/Domains/Product/Edit(ApiRest)
+        dockerfile: Dockerfile
+      container_name: edit-product-container
+      ports:
+        - "4002:4002"
+      environment:
+        - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
+      networks:
+        - my_network
+      depends_on: 
+        - products-db
+
+        
 
 networks:
   my_network:
