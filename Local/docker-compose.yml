@@ -30,36 +30,6 @@ services:
       - products-db
 
 
-  delete-product:
-    build:
-      context: ../BackEnd/Domains/Product/Delete(ApiRest)
-      dockerfile: Dockerfile
-    container_name: delete-product-container
-    ports:
-      - "4001:4001"
-    environment:
-      - MONGO_URI=mongodb://user:password@products-db:27018/spaceofsport_products?authSource=admin
-    networks:
-      - my_network
-    depends_on: 
-      - products-db
-
-
-  edit-product:
-    build:
-      context: ../BackEnd/Domains/Product/Edit(ApiRest)
-      dockerfile: Dockerfile
-    container_name: edit-product-container
-    ports:
-      - "4002:4002"
-    environment:
-      - MONGO_URI=mongodb://user:password@products-db:27018/spaceofsport_products?authSource=admin
-    networks:
-      - my_network
-    depends_on: 
-      - products-db
-
-
   product-search:
     build:
       context: ../BackEnd/Domains/Product/Product_Search(GraphQL)
