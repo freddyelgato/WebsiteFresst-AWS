@@ -18,8 +18,8 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         <main>{children}</main>
-        <footer>
-          <p>© 2025 Space of Sport - Todos los derechos reservados.</p>
+        <footer className="footer">
+        <p>© 2025 Space of Sport - Todos los derechos reservados.</p>
         </footer>
       </body>
     </html>

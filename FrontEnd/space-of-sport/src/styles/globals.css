@@ -66,3 +66,31 @@ input:focus, select:focus {
   border-color: var(--primary-color);
   outline: none;
 }
+
+/* Estilos del footer */
+html, body {
+  height: 100%; /* Asegura que el cuerpo de la página ocupe toda la altura */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* Asegura que el contenido principal ocupe el espacio disponible */
+}
+
+.footer {
+  background-color: #f0f8ff; /* Celeste claro */
+  border-top: 3px solid #00aaff; /* Borde azul */
+  text-align: center;
+  padding: 10px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+}
