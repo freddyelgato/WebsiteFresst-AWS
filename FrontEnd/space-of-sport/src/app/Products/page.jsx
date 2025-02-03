@@ -3,19 +3,19 @@
 import React, { useState, useEffect } from 'react';
 import ProductTable from './ProductTable';
 import ProductForm from './ProductForm';
+import styles from '../../styles/StartPageModule.css'; // Importa los estilos
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  // Obtener todos los productos
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:4003/api/products'); // Microservicio de ProductSearch en el puerto 4003
+        const response = await fetch('http://localhost:4003/api/products');
         const data = await response.json();
-        setProducts(data.products || []); // Asegura que recibas los productos
+        setProducts(data.products || []);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -24,29 +24,27 @@ const ProductsPage = () => {
     fetchProducts();
   }, []);
 
-  // Crear un producto
   const handleCreateProduct = () => {
-    setSelectedProduct(null); // Sin producto seleccionado
-    setIsFormVisible(true);   // Mostrar el formulario
+    setSelectedProduct(null);
+    setIsFormVisible(true);
   };
 
-  // Función para crear producto
   const handleSaveProductCreate = async (formData) => {
     try {
       const formDataWithImage = new FormData();
       formDataWithImage.append('name', formData.name);
       formDataWithImage.append('category', formData.category);
       formDataWithImage.append('price', formData.price);
-  
+
       if (formData.image) {
         formDataWithImage.append('image', formData.image);
       }
-  
+
       const response = await fetch('http://localhost:4000/api/create', {
         method: 'POST',
         body: formDataWithImage,
       });
-  
+
       if (response.ok) {
         const createdProduct = await response.json();
         setProducts((prevProducts) => [...prevProducts, createdProduct.product]);
@@ -59,29 +57,27 @@ const ProductsPage = () => {
     }
   };
 
-  // Editar un producto
   const handleEditProduct = (product) => {
-    setSelectedProduct(product); // Selecciona el producto para editar
-    setIsFormVisible(true);      // Mostrar el formulario
+    setSelectedProduct(product);
+    setIsFormVisible(true);
   };
 
-  // Función para editar producto
   const handleSaveProductEdit = async (formData) => {
     try {
       const formDataWithImage = new FormData();
       formDataWithImage.append('name', formData.name);
       formDataWithImage.append('category', formData.category);
       formDataWithImage.append('price', formData.price);
-  
+
       if (formData.image) {
         formDataWithImage.append('image', formData.image);
       }
-  
+
       const response = await fetch(`http://localhost:4002/api/edit/${selectedProduct._id}`, {
         method: 'PUT',
         body: formDataWithImage,
       });
-  
+
       if (response.ok) {
         const updatedProduct = await response.json();
         setProducts((prevProducts) => 
@@ -98,7 +94,6 @@ const ProductsPage = () => {
     }
   };
 
-  // Eliminar un producto
   const handleDeleteProduct = async (productId) => {
     try {
       const response = await fetch(`http://localhost:4001/api/products/${productId}`, {
@@ -106,7 +101,7 @@ const ProductsPage = () => {
       });
 
       if (response.ok) {
-        setProducts(products.filter((product) => product._id !== productId)); // Elimina el producto
+        setProducts(products.filter((product) => product._id !== productId));
       } else {
         console.error('Error deleting product:', response.statusText);
       }
@@ -115,32 +110,32 @@ const ProductsPage = () => {
     }
   };
 
-  // Buscar productos
   const handleSearchProducts = async (query) => {
     try {
       const response = await fetch(`http://localhost:4003/api/search?query=${query}`);
       const data = await response.json();
-      setProducts(data.products || []); // Actualiza la lista de productos con los resultados filtrados
+      setProducts(data.products || []);
     } catch (error) {
       console.error('Error searching products:', error);
     }
   };
 
   return (
-    <div>
-      <h1>Products Management</h1>
-      <button onClick={handleCreateProduct}>Create New Product</button>
-
-      <input
-        type="text"
-        placeholder="Search products..."
-        onChange={(e) => handleSearchProducts(e.target.value)}
-      />
+    <div className={styles.main}>
+      <h1>Product Management</h1>
+      <div className={styles.buttons}>
+        <button onClick={handleCreateProduct}>Create New Product</button>
+        <input
+          type="text"
+          placeholder="Search products..."
+          onChange={(e) => handleSearchProducts(e.target.value)}
+        />
+      </div>
 
       {isFormVisible ? (
         <ProductForm
           product={selectedProduct}
-          onSave={selectedProduct ? handleSaveProductEdit : handleSaveProductCreate} // Decide qué función usar
+          onSave={selectedProduct ? handleSaveProductEdit : handleSaveProductCreate}
           onCancel={() => setIsFormVisible(false)}
         />
       ) : (

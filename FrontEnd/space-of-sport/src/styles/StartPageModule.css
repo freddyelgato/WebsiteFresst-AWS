@@ -1,35 +1,90 @@
-/* src/styles/StartPageModule.css */
 .main {
-    text-align: center;
-    padding: 2rem;
-    background-color: #f5f5f5;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    color: #333;
-  }
-  
-  p {
-    font-size: 1.25rem;
-    color: #555;
-  }
-  
-  .buttons {
-    margin-top: 1.5rem;
-  }
-  
-  .btn {
-    text-decoration: none;
-    color: white;
-    background-color: #0070f3;
-    padding: 0.75rem 1.5rem;
-    border-radius: 5px;
-    margin: 0 0.5rem;
-    transition: background-color 0.3s;
-  }
-  
-  .btn:hover {
-    background-color: #005bb5;
-  }
-  
+  text-align: center;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  text-decoration: none;
+  color: white;
+  background-color: var(--primary-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  background-color: var(--primary-hover);
+}
+
+
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Asegura que las celdas compartan bordes */
+  margin: 20px 0;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+th {
+  background-color: #f4f4f4; /* Fondo gris claro para los encabezados */
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Fondo gris claro en filas pares */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Fondo gris cuando pasas el ratón por encima */
+}
+
+/* Estilos para las imágenes */
+img {
+  max-width: 300px; /* Aumenta el tamaño máximo de las imágenes */
+  max-height: 300px; /* Aumenta la altura máxima de las imágenes */
+  object-fit: cover; /* Mantiene la proporción de la imagen */
+}
+
+
+
+button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductActions from './ProductActions';
+import styles from '../../styles/StartPageModule.css';  // Asegúrate de importar los estilos
 
 const ProductTable = ({ products, onDelete, onEdit }) => {
   return (
