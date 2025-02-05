@@ -21,10 +21,7 @@ export default function RootLayout({ children }) {
         <footer className="py-5 bg-dark">
             <div className="container px-4 px-lg-5"><p className="m-0 text-center text-white">Copyright &copy; 2025 Space of Sport - Todos los derechos reservados.</p></div>
         </footer>
- 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-       
-        <script src="js/scripts.js"></script>
+
       </body>
     </html>
   );

@@ -3,11 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import "bootstrap/dist/css/bootstrap.min.css";
-import CardGrid from "../../components/CardGrid";
-import Navbar from "../../components/Navbar"; // Ruta correcta, retrocedemos dos niveles
-
+import Sidebar from "../../components/Sidebar";  // Correcta ruta hacia el Sidebar
 import { useRouter } from 'next/navigation';
 import ProtectedPage from '@/components/ProtectedPage';
+
 
 
 const AdminPage = () => {
@@ -20,15 +19,31 @@ const AdminPage = () => {
 
     return (
         <ProtectedPage role="admin">
-              <Navbar />
-        <h1>Bienvenido al Panel de Admin</h1>
-        <CardGrid />
-            <nav>
-                <Link href="/logout">
-                   
-                    <button onClick={handleLogout} className="px-4 py-2 bg-blue-600 text-black rounded">Logout</button>
-                </Link>
-            </nav>
+            <div style={{ display: 'flex' }}>
+                <Sidebar />
+                <main style={{ flexGrow: 1, padding: '16px' }}>
+                    <h1>Bienvenido a la página principal</h1>
+
+                    {/* Tarjeta principal de Usuarios */}
+                    <div className="card mt-4 mb-4">
+                        <div className="card-header">
+                            <h5>Usuarios</h5>
+                        </div>
+                        <div className="card-body">
+                            {/* Segunda tarjeta dentro de la tarjeta principal */}
+                            <div className="card mt-3">
+                                <div className="card-header">
+                                    <h6>Detalles de Usuarios</h6>
+                                </div>
+                                <div className="card-body">
+                                    <p>Aquí puedes mostrar información adicional sobre los usuarios, como una lista o tabla.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+            </div>
         </ProtectedPage>
 
     );
