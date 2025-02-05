@@ -14,7 +14,6 @@ services:
       - my_network
     
 
-
   create-product:
     build:
       context: ../BackEnd/Domains/Product/Create(ApiRest)
@@ -28,15 +27,12 @@ services:
       - my_network
     depends_on:
       - products-db
-    volumes:
-    - ../BackEnd/Domains/Product/uploads:/usr/src/app/uploads
-
-
+  
 
 
   product-search:
     build:
-      context: ../BackEnd/Domains/Product/Product_Search(GraphQL)
+      context: ../BackEnd/Domains/Product/Product_Search(ApiRest)
       dockerfile: Dockerfile
     container_name: product-search-container
     ports:

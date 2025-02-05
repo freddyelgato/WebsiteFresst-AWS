@@ -31,7 +31,7 @@ const Product = mongoose.model('Product', productSchema);
 // Configuración de multer para manejo de imágenes
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../../uploads')); // Carpeta 'uploads' dentro de Product
+        cb(null, path.join(__dirname, '../uploads')); // Carpeta 'uploads' dentro de Product
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -63,7 +63,7 @@ router.put('/:_id', upload.single('image'), async (req, res) => {
         if (req.file) {
             // Eliminar la imagen anterior si existe
             if (product.imageUrl) {
-                const oldImagePath = path.join(__dirname, '../../uploads', product.imageUrl.split('/').pop());
+                const oldImagePath = path.join(__dirname, '../uploads', product.imageUrl.split('/').pop());
                 fs.unlink(oldImagePath, (err) => {
                     if (err) {
                         console.error('Error deleting old image:', err);

@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 // Configuración de almacenamiento de imágenes (Multer)
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '..', 'uploads')); // Carpeta 'uploads' dentro de Product
+        cb(null, path.join(__dirname, 'uploads')); // Carpeta 'uploads' dentro de Product
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -33,18 +33,7 @@ const upload = multer({ storage: storage });
 
 // Middleware
 app.use(bodyParser.json());
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'))); // Carpeta para imágenes
-
-
-/*
-// Base de datos (archivo JSON)
-    const databasePath = path.join(__dirname, '../../../databases/Products/products.json');
-console.log('Database path:', databasePath);  // Verifica que la ruta sea correcta.
-
-// Verifica si el archivo de la base de datos existe; si no, lo crea
-if (!fs.existsSync(databasePath)) {
-    fs.writeFileSync(databasePath, JSON.stringify([]));
-}*/
+app.use('/uploads', express.static(path.join(__dirname,'uploads'))); // Carpeta para imágenes
 
 // Rutas
 const productsRoutes = require('./routes/products'); // Correcta ubicación del archivo products.js

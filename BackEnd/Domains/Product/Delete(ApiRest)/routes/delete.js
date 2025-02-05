@@ -36,7 +36,7 @@ router.delete('/:id', async (req, res) => {
         }
 
         // Eliminar la imagen asociada
-        const imagePath = path.join(__dirname, '../../uploads', productToDelete.imageUrl.split('/').pop());
+        const imagePath = path.join(__dirname, '../uploads', productToDelete.imageUrl.split('/').pop());
         await fs.unlink(imagePath).catch(() => console.log('Image file not found'));
 
         res.status(200).json({ status: 'success', message: 'Product deleted', product: productToDelete });

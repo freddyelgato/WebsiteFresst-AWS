@@ -11,7 +11,7 @@ const router = express.Router();
 // Configuración de multer para manejar las imágenes subidas
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads')); // Carpeta 'uploads' dentro de Product
+    cb(null, path.join(__dirname, '../uploads')); // Carpeta 'uploads' dentro de Product
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); // Renombrar archivo para evitar conflictos
