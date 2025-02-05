@@ -45,8 +45,8 @@ jobs:
       - name: Build and push on Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./BackEnd/Domains/Product/Product_Search(GraphQL)
-          file: ./BackEnd/Domains/Product/Product_Search(GraphQL)/Dockerfile
+          context: ./BackEnd/Domains/Product/Product_Search(ApiRest)
+          file: ./BackEnd/Domains/Product/Product_Search(ApiRest)/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/get-product:latest
 
@@ -61,5 +61,5 @@ jobs:
               sudo docker rm get-product || echo "No existing process found"
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/get-product:latest
               sudo docker run -d -p 80:4003 --name get-product \
-                -e MONGO_URI=mongodb://3.85.210.176:27017 \
+                -e MONGO_URI=mongodb://52.90.249.249:27017 \
                 ${{ secrets.DOCKER_USERNAME }}/get-product
