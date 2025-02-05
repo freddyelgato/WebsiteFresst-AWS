@@ -7,8 +7,8 @@
             "preLaunchTask": "docker-run: debug",
             "platform": "node",
             "node": {
-                "package": "${workspaceFolder}/FrontEnd/space-of-sport/package.json",
-                "localRoot": "${workspaceFolder}/FrontEnd/space-of-sport"
+                "package": "${workspaceFolder}/BackEnd/Domains/Users/Register/package.json",
+                "localRoot": "${workspaceFolder}/BackEnd/Domains/Users/Register"
             }
         }
     ]

@@ -6,12 +6,12 @@
 			"label": "docker-build",
 			"platform": "node",
 			"dockerBuild": {
-				"dockerfile": "${workspaceFolder}/FrontEnd/space-of-sport/Dockerfile",
-				"context": "${workspaceFolder}/FrontEnd/space-of-sport",
+				"dockerfile": "${workspaceFolder}/BackEnd/Domains/Users/Register/Dockerfile",
+				"context": "${workspaceFolder}/BackEnd/Domains/Users/Register",
 				"pull": true
 			},
 			"node": {
-				"package": "${workspaceFolder}/FrontEnd/space-of-sport/package.json"
+				"package": "${workspaceFolder}/BackEnd/Domains/Users/Register/package.json"
 			}
 		},
 		{
@@ -22,7 +22,7 @@
 			],
 			"platform": "node",
 			"node": {
-				"package": "${workspaceFolder}/FrontEnd/space-of-sport/package.json"
+				"package": "${workspaceFolder}/BackEnd/Domains/Users/Register/package.json"
 			}
 		},
 		{
@@ -38,7 +38,7 @@
 				}
 			},
 			"node": {
-				"package": "${workspaceFolder}/FrontEnd/space-of-sport/package.json",
+				"package": "${workspaceFolder}/BackEnd/Domains/Users/Register/package.json",
 				"enableDebugging": true
 			}
 		}
