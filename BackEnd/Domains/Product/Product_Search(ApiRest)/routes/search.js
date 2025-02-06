@@ -6,7 +6,6 @@ const router = express.Router();
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI, { 
-    dbName: "spaceofsport_products", // Forzar la base de datos correcta
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('Connected to MongoDB')).catch(err => console.error('MongoDB connection error:', err));
