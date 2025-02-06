@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI, { 
-    dbName: "spaceofsport_products", // 🔥 Forzar la base de datos correcta
+    dbName: "spaceofsport_products", // Forzar la base de datos correcta
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('Connected to MongoDB')).catch(err => console.error('MongoDB connection error:', err));
@@ -25,13 +25,10 @@ const Product = mongoose.model('Product', productSchema);
 router.get('/', async (req, res) => {
     try {
         const products = await Product.find();
-        if (!products) {
-            console.log('No products found in the database');
-        }
         res.status(200).json({ status: 'success', products });
     } catch (err) {
-        console.error('Error retrieving products:', err);
-        res.status(500).json({ status: 'error', message: 'Error retrieving products', error: err.message });
+        console.error(err);
+        res.status(500).json({ status: 'error', message: 'Error retrieving products' });
     }
 });
 
