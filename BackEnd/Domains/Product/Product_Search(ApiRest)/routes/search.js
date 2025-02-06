@@ -25,10 +25,13 @@ const Product = mongoose.model('Product', productSchema);
 router.get('/', async (req, res) => {
     try {
         const products = await Product.find();
+        if (!products) {
+            console.log('No products found in the database');
+        }
         res.status(200).json({ status: 'success', products });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: 'error', message: 'Error retrieving products' });
+        console.error('Error retrieving products:', err);
+        res.status(500).json({ status: 'error', message: 'Error retrieving products', error: err.message });
     }
 });
 
