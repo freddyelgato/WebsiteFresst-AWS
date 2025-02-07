@@ -7,7 +7,16 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - db
+      db:
+        condition: service_healthy  # Espera a que PostgreSQL esté listo
+      validate: 
+        condition: service_started 
+        
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+      JWT_SECRET: my_secrete_key
+    networks:
+      - app-network
 
   # Microservicio Validate
   validate:
@@ -17,7 +26,12 @@ services:
     ports:
       - "3003:3003"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
 
   # Microservicio Logout
   logout:
@@ -27,7 +41,16 @@ services:
     ports:
       - "3002:3002"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      validate: 
+        condition: service_started 
+
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+      JWT_SECRET: my_secrete_key
+    networks:
+      - app-network
 
   # Microservicio Register
   register:
@@ -37,17 +60,32 @@ services:
     ports:
       - "3004:3004"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
 
   # Base de datos PostgreSQL
   db:
     image: postgres:latest
+    container_name: db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: User_DB
     ports:
       - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    healthcheck:  # Agrega un healthcheck para asegurar que PostgreSQL esté listo
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 5
+      timeout: 3s
 
   # Frontend (Next.js)
   frontend:
@@ -61,3 +99,10 @@ services:
       - validate
       - logout
       - register
+    networks:
+      - app-network
+
+# Red personalizada para los servicios
+networks:
+  app-network:
+    driver: bridge
