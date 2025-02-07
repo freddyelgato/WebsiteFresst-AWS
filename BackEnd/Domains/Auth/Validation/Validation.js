@@ -1,16 +1,18 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');  // Agregado, ya que lo usas en authenticate
+const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Importar el módulo de lista negra de tokens
-const tokenBlacklist = require('../Logout/utils/tokenBlacklist'); 
+// Ajustar la ruta de la lista negra de tokens
+//const tokenBlacklist = require('./Backend/Auth/Logout/utils/tokenBlacklist');
+const tokenBlacklist = require('./utils/tokenBlacklist');
+
 
 const router = express.Router();
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-// Endpoint para autenticar credenciales
+// Ruta para autenticar credenciales
 router.post('/authenticate', async (req, res) => {
     const { email, password } = req.body;
 
@@ -19,7 +21,6 @@ router.post('/authenticate', async (req, res) => {
     }
 
     try {
-        // Consultar el usuario en la base de datos por su email
         const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         const user = userResult.rows[0];
 
@@ -27,7 +28,6 @@ router.post('/authenticate', async (req, res) => {
             return res.json({ valid: false });
         }
 
-        // Comparar contraseñas
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
             return res.json({ valid: false });
@@ -44,7 +44,6 @@ router.post('/authenticate', async (req, res) => {
 router.post('/', async (req, res) => {
     const { token } = req.body;
 
-    // Validar si el token está en la lista negra
     if (!token || tokenBlacklist.isBlacklisted(token)) {
         return res.json({ valid: false });
     }
@@ -53,7 +52,6 @@ router.post('/', async (req, res) => {
         if (err) return res.json({ valid: false });
 
         try {
-            // Verificar el usuario en la base de datos
             const userResponse = await pool.query('SELECT * FROM users WHERE id = $1', [user.id]);
 
             if (userResponse.rows[0]) {
@@ -68,7 +66,7 @@ router.post('/', async (req, res) => {
     });
 });
 
-// Ruta para revocar tokens (usado por Logout)
+// Ruta para revocar tokens
 router.post('/revoke', (req, res) => {
     const { token } = req.body;
 

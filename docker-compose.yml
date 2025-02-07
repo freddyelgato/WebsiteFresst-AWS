@@ -1,0 +1,63 @@
+services:
+  # Microservicio Login
+  login:
+    build:
+      context: ./Backend/Domains/Auth/Login
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+
+  # Microservicio Validate
+  validate:
+    build:
+      context: ./Backend/Domains/Auth/Validation
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    depends_on:
+      - db
+
+  # Microservicio Logout
+  logout:
+    build:
+      context: ./Backend/Domains/Auth/Logout
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - db
+
+  # Microservicio Register
+  register:
+    build:
+      context: ./Backend/Domains/Users/Register
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    depends_on:
+      - db
+
+  # Base de datos PostgreSQL
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: User_DB
+    ports:
+      - "5432:5432"
+
+  # Frontend (Next.js)
+  frontend:
+    build:
+      context: ./Frontend/space-of-sport
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - login
+      - validate
+      - logout
+      - register
