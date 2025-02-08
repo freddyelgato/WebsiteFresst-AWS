@@ -1,0 +1,40 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Update User API",
+    "description": "API para actualizar usuarios en PostgreSQL",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/update-user/{user_id}": {
+      "put": {
+        "summary": "Actualizar usuario",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {"type": "string"},
+                "email": {"type": "string"}
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {"description": "Usuario actualizado"},
+          "400": {"description": "Datos faltantes"},
+          "500": {"description": "Error del servidor"}
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,9 @@ import axios from "axios";
 
 export default function ListUsers() {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     fetchUsers();
@@ -29,6 +32,60 @@ export default function ListUsers() {
     } catch (error) {
       console.error("Error al eliminar usuario:", error);
     }
+  };
+  
+  const updateUser = async (id, updatedName, updatedEmail) => {
+    console.log("Datos a enviar:", { updatedName, updatedEmail });
+
+    if (!updatedName || !updatedEmail) {
+      Swal.fire("Error", "Los campos de nombre y correo son obligatorios.", "error");
+      return;
+    }
+
+    try {
+      await axios.put(`http://localhost:5002/update/${id}`, {
+        name: updatedName,
+        email: updatedEmail,
+      });
+
+      Swal.fire("Actualizado", "El usuario ha sido actualizado.", "success");
+      fetchUsers(); // Recargar la lista de usuarios
+    } catch (error) {
+      console.error("Error al actualizar usuario:", error);
+      Swal.fire("Error", "No se pudo actualizar el usuario.", "error");
+    }
+  };
+
+  const handleUpdate = (user) => {
+    setSelectedUser(user);
+    setName(user.name);
+    setEmail(user.email);
+
+    Swal.fire({
+      title: "Editar Usuario",
+      html: `
+        <input id="swal-name" class="swal2-input" placeholder="Nombre" value="${user.name}">
+        <input id="swal-email" class="swal2-input" placeholder="Correo" value="${user.email}">
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Actualizar",
+      cancelButtonText: "Cancelar",
+      preConfirm: () => {
+        const newName = document.getElementById("swal-name").value.trim();
+        const newEmail = document.getElementById("swal-email").value.trim();
+
+        if (!newName || !newEmail) {
+          Swal.showValidationMessage("Por favor, ingrese un nombre y un correo.");
+          return false;
+        }
+
+        return { newName, newEmail };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateUser(user.id, result.value.newName, result.value.newEmail);
+      }
+    });
   };
   const handleDelete = (id) => {
     Swal.fire({
@@ -77,7 +134,10 @@ export default function ListUsers() {
                     </span>
                   </td>
                   <td>
-                    <button className="btn btn-sm btn-warning me-2">
+                    <button
+                      className="btn btn-sm btn-warning me-2"
+                      onClick={() => handleUpdate(user)}
+                    >
                       <FaEdit /> Editar
                     </button>
                     <button
