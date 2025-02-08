@@ -1,7 +1,7 @@
 
 # ❄️ **Fresst Proposal** 🏭  
 
-### By: **Freddy Moreira**  
+### By: **Freddy Moreira and Mateo Rivadeneira**  
 **A PROFESSIONAL WEBSITE FOR INDUSTRIAL EQUIPMENT**  
 
 ---
