@@ -1,120 +1,91 @@
 
-# 🏀 Space of Sport Proposal 🏋️
+# ❄️ **Fresst Proposal** 🏭  
 
-### By: Freddy Moreira & Mateo Rivadeneira  
-**A SPORTS GOODS E-COMMERCE**  
-
----
-
-## 🎯 Objective
-Develop an innovative e-commerce platform for sports products that delivers:
-- A **personalized**, **fast**, and **seamless shopping experience**.
-- Utilizes modern technologies and **microservices** for scalability and performance.
+### By: **Freddy Moreira**  
+**A PROFESSIONAL WEBSITE FOR INDUSTRIAL EQUIPMENT**  
 
 ---
 
-## 🚀 Motivation
-- Improve the **user experience** by addressing common issues like slow response times and limited personalization.
-- Create a **seamless** and **engaging** shopping journey.
-- Meet the growing demand for sports products by ensuring the platform evolves with customer needs.
-- Stay ahead in the competitive sports e-commerce industry.
+## 🎯 **Objective**  
+Develop a **business website** that showcases industrial refrigeration and commercial equipment, providing:  
+- A **modern, professional, and informative** user experience.  
+- A **clear presentation** of products and business information.  
+- A **fast and scalable** platform using the latest web technologies.  
 
 ---
 
-## 🔧 Key Features and Technologies
-
-### **GraphQL**  
-- Fetches specific product details or personalized recommendations.
-- Delivers only the necessary data to customers.
-
-### **API REST**  
-- Handles common tasks like user login, payment processing, and order creation.
-- Integrates with external payment and delivery services.
-
-### **WebSocket**  
-- Provides real-time updates, such as product availability notifications or flash sale alerts.
-
-### **Webhook**  
-- Sends order updates or payment confirmations to external systems like delivery services or payment processors.
-
-### **RPC/SOAP**  
-- Performs secure internal tasks like payment verification or logging critical actions for audits.
+## 🚀 **Motivation**  
+- Increase the **visibility** of the business and attract potential clients.  
+- Provide a **structured and user-friendly** way to explore industrial equipment.  
+- Ensure a **fast, reliable, and accessible** website for all users.  
+- Establish **Fresst** as a reference in the industrial refrigeration industry.  
 
 ---
 
-## 🏗️ Architecture
-The system will be based on a **microservices/event-driven architecture**, deployed on **AWS** for scalability and resilience.
+## 🔧 **Key Features and Technologies**  
 
-### **Microservices Overview**
-1. **Product Catalog Domain**
-   - Product management: API REST (CRUD operations).
-   - Product search: GraphQL (flexible queries).
-   - Category management: API REST (category hierarchy).
-   - Inventory management: RPC (gRPC) (efficient stock control).
+### **Product Showcase**  
+- Displays industrial equipment with specifications and images.  
+- Organized by categories for easy navigation.  
 
-2. **User and Authentication Domain**
-   - User registration: API REST (account creation).
-   - Authentication (login/logout): RPC (gRPC) (fast responses).
-   - User profile management: API REST (personal data updates).
-   - Role/privilege management: API REST (admin permissions).
+### **Business Information Section**  
+- Provides details about the company, its mission, and values.  
+- Includes contact information and business location.  
 
-3. **Shopping Cart Domain**
-   - Cart synchronization: WebSocket (real-time cart updates).
-   - Tax calculation: RPC (gRPC) (quick calculations).
-   - Shipping cost calculation: API REST (shipping rates).
+### **News & Blog**  
+- Shares updates on new equipment, industry trends, and company news.  
 
-4. **Orders Domain**
-   - Order creation: API REST (purchase confirmation).
-   - Order status management: WebSocket (real-time notifications).
-   - Order history: GraphQL (customized queries).
-   - Returns management: API REST (returns processing).
+### **Contact & Inquiry Forms**  
+- Allows potential clients to request more information about products.  
 
-5. **Payments Domain**
-   - Payment processing: API REST (integration with gateways).
-   - Payment gateway integration: Webhook (payment confirmations).
-
-6. **Notifications Domain**
-   - Email notifications: API REST (email delivery).
-   - SMS notifications: API REST/Webhook (provider integration).
-   - Push notifications: WebSocket (for mobile or web apps).
-
-7. **Analytics and Monitoring Domain**
-   - Usage data collection: Webhook (event delivery).
-   - Report generation: GraphQL (customized reporting).
+### **SEO Optimization**  
+- Ensures high search engine ranking for better online visibility.  
 
 ---
 
-## 💻 Frontend
-- Built with **React** and **Next.js** for a responsive, user-friendly interface.
-- Optimized for seamless navigation and efficient handling of product data.
+## 🏗️ **Architecture**  
+The system is designed with **a modular and scalable structure**, using independent databases for different domains.  
 
-## ⚙️ Backend
-- **Python**: Personalized recommendations and data analysis using machine learning.
-- **C#**: Integration with enterprise systems, managing audits and logs.
-- **Node.js**: Frontend building with server-side rendering via Next.js.
-- **Go**: High-performance services like inventory management.
-
----
-
-## 📊 Databases
-- **Relational**: Amazon RDS, Amazon Aurora.
-- **Time-series**: Amazon Timestream.
-- **Document**: Amazon DocumentDB (MongoDB).
-- **Ledger**: Amazon QLDB.
-- **Key-Value**: Amazon DynamoDB.
-- **In-memory**: Amazon ElastiCache (Redis).
-- **Graph**: Amazon Neptune.
-- **Columnar**: Amazon Redshift.
-- **Geospatial**: Amazon Location Service.
+### **Database Domains**  
+1. **Products Domain** – Stores all product information.  
+2. **Company Information Domain** – Contains business details and mission statements.  
+3. **Clients & Inquiries Domain** – Manages user inquiries and requests.  
+4. **Blog & News Domain** – Stores company updates and industry news.  
+5. **SEO & Analytics Domain** – Tracks visitor interactions and website performance.  
+6. **Contact Information Domain** – Handles addresses, emails, and phone numbers.  
+7. **Testimonials & Reviews Domain** – Collects customer feedback.  
+8. **Gallery & Media Domain** – Stores product images and videos.  
+9. **Partners & Suppliers Domain** – Lists company affiliations and suppliers.  
+🔟 **Legal & Compliance Domain** – Manages privacy policies and legal documents.  
 
 ---
 
-## 🔒 Security
-- **CORS** for secure API interactions.
-- **JWT** for authentication.
-- Encrypted communications with **TLS**.
+## 💻 **Frontend**  
+- Developed with **React** and **Next.js** for a smooth, modern, and responsive interface.  
+- Ensures **fast loading times** and **mobile-friendly design**.  
+
+## ⚙️ **Backend**  
+- **Node.js**: Handles API endpoints and content management.  
+- **Go**: Manages high-performance queries for product listings.  
+- **C#**: Handles business logic for content updates and data integrity.  
+- **Python**: Supports analytics and visitor tracking.  
 
 ---
 
-## 🙌 Thanks for Your Attention!  
-**Let's build a revolutionary sports e-commerce platform together!**  
+## 📊 **Databases**  
+- **Relational**: PostgreSQL, MySQL (for structured data).  
+- **Document**: MongoDB (for flexible product descriptions).  
+- **Key-Value**: Redis (for caching and fast access).  
+- **Search**: Elasticsearch (for product and content search).  
+
+---
+
+## 🔒 **Security**  
+- **SSL/TLS encryption** for secure communication.  
+- **CORS policies** for controlled API access.  
+- **User authentication** for content management (if needed).  
+
+---
+
+## 🙌 **Thanks for Your Attention!**  
+**Fresst will bring innovation and professionalism to the industrial equipment sector!**  

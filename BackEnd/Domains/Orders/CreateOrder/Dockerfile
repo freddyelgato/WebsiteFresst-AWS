@@ -19,6 +19,6 @@ WORKDIR /root/
 
 COPY --from=builder /app/main .
 
-EXPOSE 80
+EXPOSE 5000
 
 CMD ["./main"]
