@@ -36,8 +36,9 @@ const Sidebar = () => {
 
         {/* Menu items */}
         <div className="d-grid gap-2">
-          <Link href="/" className="btn btn-outline-light w-100 d-flex align-items-center">
-            <i className="bi bi-house me-2"></i> Home
+
+          <Link href="/admin" className="btn btn-outline-light w-100 d-flex align-items-center">
+            <i className="bi bi-people me-2"></i> Users
           </Link>
 
           <Link href="/products" className="btn btn-outline-light w-100 d-flex align-items-center">
@@ -69,9 +70,9 @@ const Sidebar = () => {
           <Link href="/Cart" className="btn btn-outline-light w-100 d-flex align-items-center">
             <i className="bi bi-cart me-2"></i> Cart
           </Link>
-          
+
         </div>
-        
+
         <hr className="border-light mt-3" />
         {/* User Profile Dropdown */}
         <div className="mt-auto">
@@ -84,37 +85,36 @@ const Sidebar = () => {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              
+
               {/* Avatar */}
-              
+
               <span
                 className="bg-white rounded-circle d-inline-block"
                 style={{
                   width: "40px",
                   height: "40px",
                   backgroundImage:
-                    "url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80')",
+                    "url('/11787559.png')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
               ></span>
-              
+
 
               {/* User Info */}
               <span className="ms-2 d-flex flex-column">
-                <span className="fw-bold">John Doe</span>
+                <span className="fw-bold">Administracion</span>
                 <span className="text-white-50" style={{ fontSize: "0.85rem" }}>
                   Admin
                 </span>
               </span>
             </a>
-        
+
             <hr className="border-light mt-3" />
+
             {/* Dropdown Menu */}
             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-              <li>
-                <button className="dropdown-item text-danger">Logout</button>
-              </li>
+              <li><Link href="/logout" className="dropdown-item">Logout</Link></li>
             </ul>
           </div>
         </div>

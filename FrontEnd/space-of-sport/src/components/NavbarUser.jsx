@@ -43,7 +43,7 @@ const NavbarUser = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link href="/" className="nav-link active">
+                            <Link href="/login" className="nav-link active">
                                 Home
                             </Link>
                         </li>
@@ -105,23 +105,44 @@ const NavbarUser = () => {
                         <li className="dropdown">
                             {/* Botón de activación */}
                             <a
+                                className="navbar-brand text-white fw-bold d-flex align-items-center dropdown-toggle"
                                 href="#"
-                                className="nav-link dropdown-toggle"
-                                id="navbarDropdown"
-                                onClick={toggleDropdown}
-                                aria-expanded={isDropdownOpen ? "true" : "false"}
-
+                                role="button"
+                                id="userDropdown"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
                             >
-                                Welcome, User <b className="caret"></b>
+
+                                {/* Avatar */}
+
+                                <span
+                                    className="bg-white rounded-circle d-inline-block"
+                                    style={{
+                                        width: "40px",
+                                        height: "40px",
+                                        backgroundImage:
+                                            "url('/6897018.png')",
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                    }}
+                                ></span>
+
+
+                                {/* User Info */}
+                                <span className="ms-2 d-flex flex-column">
+                                    <span className="fw-bold" style={{ fontSize: "0.9rem" }}>Usuario</span>
+                                    <span className="text-white-50" style={{ fontSize: "0.75rem" }}>User</span>
+                                </span>
+
                             </a>
 
                             {/* Menú desplegable */}
                             <div className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`} aria-labelledby="navbarDropdown">
-                                <a className="dropdown-item" href="#">Action</a>
-                                <a className="dropdown-item" href="#">Edit profile</a>
-                                <div className="dropdown-divider"></div>
+                                {/*<div className="dropdown-divider"></div>*/}
                                 <a className="dropdown-item" href="/logout">Logout</a>
                             </div>
+
+
                         </li>
                     </ul>
                 </div>
