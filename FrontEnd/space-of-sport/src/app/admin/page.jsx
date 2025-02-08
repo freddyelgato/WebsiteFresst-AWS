@@ -13,10 +13,14 @@ import ListUsers from "../listUser/page";
 const AdminPage = () => {
     const router = useRouter();
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        router.push('/');
+
+    {/*const handleSearch = async () => {
+        let data = isNaN(input) ? await searchUserByName(input) : await searchUserById(parseInt(input));
+        setResult(data);
     };
+    */}
+
+
 
     return (
         <ProtectedPage role="admin">
@@ -30,7 +34,6 @@ const AdminPage = () => {
                         <div className="card-header">
                             <h5>Gestion de Usuarios</h5>
                         </div>
-                        
                         <div className="card-body">
                             {/* Segunda tarjeta dentro de la tarjeta principal */}
                             <div className="card mt-3 shadow">

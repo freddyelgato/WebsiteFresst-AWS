@@ -1,16 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
+import { searchUserById, searchUserByName } from "@/utils/api";
 import Swal from "sweetalert2";
 import axios from "axios";
 
 
 export default function ListUsers() {
   const [users, setUsers] = useState([]);
+  const [filteredUser, setFilteredUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState([]);
 
   useEffect(() => {
     fetchUsers();
@@ -24,6 +29,25 @@ export default function ListUsers() {
       console.error("Error al obtener usuarios:", error);
     }
   };
+  const handleSearch = async () => {
+    if (!input.trim()) {
+      setResult([]);  // Si el input está vacío, reseteamos los resultados
+      fetchUsers();  // Recargamos la lista de todos los usuarios
+      return;
+    }
+
+    let result = [];
+    // Aseguramos que el input sea un número para la búsqueda por ID
+    if (!isNaN(input.trim())) {
+      result = await searchUserById(parseInt(input.trim())); // Buscar por ID
+    } else {
+      result = await searchUserByName(input.trim()); // Buscar por nombre
+    }
+
+    // Aseguramos que `result` sea un array antes de actualizar el estado
+    setResult(Array.isArray(result) ? result : []); // Actualiza el estado con un array vacío si no es un array
+  };
+
 
   const deleteUser = async (id) => {
     try {
@@ -33,7 +57,7 @@ export default function ListUsers() {
       console.error("Error al eliminar usuario:", error);
     }
   };
-  
+
   const updateUser = async (id, updatedName, updatedEmail) => {
     console.log("Datos a enviar:", { updatedName, updatedEmail });
 
@@ -108,6 +132,19 @@ export default function ListUsers() {
   return (
     <div className="card-body">
       <div className="table-responsive">
+        {/* 🔍 Input de búsqueda + Botón */}
+        <div className="d-flex justify-content-end mb-3">
+          <input
+            type="text"
+            className="form-control me-2 w-auto"  // Cambié a w-auto para ajustar el ancho
+            placeholder="Buscar"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <button className="btn btn-primary px-4 py-2" onClick={handleSearch}> {/* Ajuste para hacerlo más rectangular */}
+            <FaSearch /> Buscar
+          </button>
+        </div>
         <table className="table table-striped table-hover">
           <thead className="table-dark">
             <tr>
@@ -119,42 +156,70 @@ export default function ListUsers() {
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? (
-              users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    <span
-                      className={`badge ${user.role === "admin" ? "bg-danger" : "bg-success"
-                        }`}
-                    >
-                      {user.role}
-                    </span>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-sm btn-warning me-2"
-                      onClick={() => handleUpdate(user)}
-                    >
-                      <FaEdit /> Editar
-                    </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => handleDelete(user.id)}
-                    >
-                      <FaTrash /> Eliminar
-                    </button>
+            {Array.isArray(result) && result.length === 0 && input.trim() === "" ? (  // Si el input está vacío y no hay resultados
+              users && users.length > 0 ? (
+                users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      <span className={`badge ${user.role === "admin" ? "bg-danger" : "bg-success"}`}>
+                        {user.role}
+                      </span>
+                    </td>
+                    <td>
+                      <button className="btn btn-sm btn-warning me-2" onClick={() => handleUpdate(user)}>
+                        <FaEdit /> Editar
+                      </button>
+                      <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id)}>
+                        <FaTrash /> Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center text-muted">
+                    No hay usuarios disponibles
                   </td>
                 </tr>
-              ))
-            ) : (
+              )
+            ) : Array.isArray(result) && result.length === 0 ? (  // Si no se encuentran resultados de la búsqueda
               <tr>
                 <td colSpan="5" className="text-center text-muted">
-                  No hay usuarios disponibles
+                  No se encontraron resultados.
                 </td>
               </tr>
+            ) : (  // Si hay resultados
+              Array.isArray(result) && result.length > 0 ? (
+                result.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      <span className={`badge ${user.role === "admin" ? "bg-danger" : "bg-success"}`}>
+                        {user.role}
+                      </span>
+                    </td>
+                    <td>
+                      <button className="btn btn-sm btn-warning me-2" onClick={() => handleUpdate(user)}>
+                        <FaEdit /> Editar
+                      </button>
+                      <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id)}>
+                        <FaTrash /> Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center text-muted">
+                    No se encontraron resultados.
+                  </td>
+                </tr>
+              )
             )}
           </tbody>
         </table>

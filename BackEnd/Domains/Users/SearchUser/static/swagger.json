@@ -1,0 +1,38 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "User Search API",
+      "description": "API para buscar usuarios por ID o nombre usando GraphQL",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/graphql": {
+        "post": {
+          "summary": "Realizar consultas GraphQL",
+          "description": "Permite buscar usuarios por ID o nombre",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "query",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "{ searchUserById(id: 1) { id name email } }"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Respuesta exitosa"
+            }
+          }
+        }
+      }
+    }
+  }
+  
