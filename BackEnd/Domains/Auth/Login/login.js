@@ -39,8 +39,8 @@ router.post('/', async (req, res) => {
         }
 
         // Verificar las credenciales con el servicio de validación
-        const validationResponse = await axios.post('http://localhost:3003/validation/authenticate', {
-        //const validationResponse = await axios.post('http://validate:3003/validation/authenticate', {
+        //const validationResponse = await axios.post('http://localhost:3003/validation/authenticate', {
+        const validationResponse = await axios.post('http://validate:3003/validation/authenticate', {
             email,
             password,
         });

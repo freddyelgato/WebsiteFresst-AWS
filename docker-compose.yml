@@ -67,6 +67,66 @@ services:
     networks:
       - app-network
 
+    # Microservicio ListUser
+  listuser:
+    build:
+      context: ./Backend/Domains/Users/ListUser
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+   # Microservicio DeleteUser
+  deleteuser:
+    build:
+      context: ./Backend/Domains/Users/DeleteUser
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+   # Microservicio UpdateUser
+  updateuser:
+    build:
+      context: ./Backend/Domains/Users/UpdateUser
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+      # Microservicio SearchUser
+  searchuser:
+    build:
+      context: ./Backend/Domains/Users/SearchUser
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
   # Base de datos PostgreSQL
   db:
     image: postgres:latest
