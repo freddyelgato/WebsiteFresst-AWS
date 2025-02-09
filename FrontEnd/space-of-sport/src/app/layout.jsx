@@ -1,25 +1,31 @@
-// layout.jsx
-
 "use client"; // Asegura que este archivo se ejecute solo en el cliente
-import React, { useEffect } from "react"; // Importar React y useEffect
+import React, { useEffect, useState } from "react"; // Importar React, useEffect y useState
 import Navbar from "../components/Navbar";
+import Cookies from "js-cookie"; // Importar Cookies para verificar el rol del usuario
 import "../styles/globals.css";
-import 'bootstrap/dist/css/bootstrap.min.css'; // Estilos de Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css"; // Estilos de Bootstrap
 
-// Componente funcional RootLayout donde se usa useEffect
 export default function RootLayout({ children }) {
-  // Cargar Bootstrap JS solo en el cliente con useEffect
+  const [role, setRole] = useState(null);
+
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
-  }, []); // Solo se ejecuta una vez cuando el componente se monta
+
+    // Obtener el rol del usuario desde las cookies
+    const userRole = Cookies.get("role");
+    setRole(userRole);
+  }, []);
 
   return (
     <html lang="en">
       <body>
-        <Navbar />
+        {/* Solo mostrar el Navbar si el usuario no es admin */}
+        {role !== "admin" && <Navbar />}
+        
         <main>{children}</main>
+        
         <footer className="footer">
-        <p>© 2025 Space of Sport - Todos los derechos reservados.</p>
+          <p>© 2025 Space of Sport - Todos los derechos reservados.</p>
         </footer>
       </body>
     </html>

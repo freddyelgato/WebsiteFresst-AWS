@@ -7,88 +7,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
   font-size: 2.5rem;
   color: #333;
-  margin-bottom: 1rem;
-}
-
-p {
-  font-size: 1.25rem;
-  color: #555;
-  margin-bottom: 1.5rem;
-}
-
-.buttons {
-  display: flex;
-  gap: 1rem;
-}
-
-.btn {
-  text-decoration: none;
-  color: white;
-  background-color: var(--primary-color);
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  transition: background-color 0.3s ease-in-out;
-  font-size: 1rem;
-}
-
-.btn:hover {
-  background-color: var(--primary-hover);
-}
-
-
-/* Estilos para la tabla */
-table {
-  width: 100%;
-  border-collapse: collapse; /* Asegura que las celdas compartan bordes */
-  margin: 20px 0;
-}
-
-th, td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ddd; /* Borde gris claro */
-}
-
-th {
-  background-color: #f4f4f4; /* Fondo gris claro para los encabezados */
-  font-weight: bold;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9; /* Fondo gris claro en filas pares */
-}
-
-tr:hover {
-  background-color: #f1f1f1; /* Fondo gris cuando pasas el ratón por encima */
-}
-
-/* Estilos para las imágenes */
-img {
-  max-width: 300px; /* Aumenta el tamaño máximo de las imágenes */
-  max-height: 300px; /* Aumenta la altura máxima de las imágenes */
-  object-fit: cover; /* Mantiene la proporción de la imagen */
-}
-
-
-.main {
-  text-align: center;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-h1 {
-  font-size: 2rem;
-  color: #2c3e50;
   font-weight: bold;
   text-transform: uppercase;
   background: linear-gradient(to right, #4CAF50, #2196F3);
   -webkit-background-clip: text;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -103,11 +32,32 @@ h2 {
   margin-bottom: 20px;
 }
 
+p {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  text-decoration: none;
+  color: white;
+  background-color: var(--primary-color, #0070f3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  margin: 0 0.5rem;
+  transition: background-color 0.3s ease-in-out;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  background-color: var(--primary-hover, #005bb5);
 }
 
 button {
@@ -192,26 +142,36 @@ label {
   background-color: #e53935;
 }
 
-/* Estilos adicionales para la tabla de productos */
+/* Estilos para la tabla */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin: 20px 0;
 }
 
-table th, table td {
-  padding: 12px;
+th, td {
+  padding: 10px;
   text-align: left;
+  border: 1px solid #ddd;
 }
 
-table th {
-  background-color: #f2f2f2;
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
   color: #333;
 }
 
-table tr:nth-child(even) {
+tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-table tr:hover {
+tr:hover {
   background-color: #e9e9e9;
+}
+
+/* Estilos para las imágenes */
+img {
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: cover;
 }

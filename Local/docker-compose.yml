@@ -1,5 +1,8 @@
+
 services:
-  # Products domain microservices
+  # ========================
+  # Microservicios de Products
+  # ========================
   products-db:
     build:
       context: ../BackEnd/databases/Products
@@ -12,7 +15,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     networks:
       - my_network
-    
 
   create-product:
     build:
@@ -27,8 +29,6 @@ services:
       - my_network
     depends_on:
       - products-db
-  
-
 
   product-search:
     build:
@@ -41,7 +41,7 @@ services:
       - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
     networks:
       - my_network
-    depends_on: 
+    depends_on:
       - products-db
 
   delete-product:
@@ -55,26 +55,186 @@ services:
       - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
     networks:
       - my_network
-    depends_on: 
+    depends_on:
       - products-db
 
   edit-product:
-      build:
-        context: ../BackEnd/Domains/Product/Edit(ApiRest)
-        dockerfile: Dockerfile
-      container_name: edit-product-container
-      ports:
-        - "4002:4002"
-      environment:
-        - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
-      networks:
-        - my_network
-      depends_on: 
-        - products-db
+    build:
+      context: ../BackEnd/Domains/Product/Edit(ApiRest)
+      dockerfile: Dockerfile
+    container_name: edit-product-container
+    ports:
+      - "4002:4002"
+    environment:
+      - MONGO_URI=mongodb://user:password@products-db:27017/spaceofsport_products?authSource=admin
+    networks:
+      - my_network
+    depends_on:
+      - products-db
 
-        
+  # ========================
+  # Microservicios de Autenticación y Usuarios
+  # ========================
+  login:
+    build:
+      context: ../Backend/Domains/Auth/Login
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+      validate:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+      JWT_SECRET: my_secrete_key
+    networks:
+      - app-network
+
+  validate:
+    build:
+      context: ../Backend/Domains/Auth/Validation
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+  logout:
+    build:
+      context: ../Backend/Domains/Auth/Logout
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      db:
+        condition: service_healthy
+      validate:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+      JWT_SECRET: my_secrete_key
+    networks:
+      - app-network
+
+  register:
+    build:
+      context: ../Backend/Domains/Users/Register
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+  listuser:
+    build:
+      context: ../Backend/Domains/Users/ListUser
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+  deleteuser:
+    build:
+      context: ../Backend/Domains/Users/DeleteUser
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+  updateuser:
+    build:
+      context: ../Backend/Domains/Users/UpdateUser
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+  searchuser:
+    build:
+      context: ../Backend/Domains/Users/SearchUser
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:12345@db:5432/User_DB
+    networks:
+      - app-network
+
+  # ========================
+  # Base de datos PostgreSQL
+  # ========================
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: User_DB
+    ports:
+      - "5433:5432"
+    volumes:
+      - ../init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 5
+      timeout: 3s
+
+  # ========================
+  # Frontend (Next.js)
+  # ========================
+  frontend:
+    build:
+      context: ../Frontend/space-of-sport
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - login
+      - validate
+      - logout
+      - register
+    networks:
+      - app-network
+      
 
 networks:
   my_network:
     driver: bridge
-
+  app-network:
+    driver: bridge

@@ -7,6 +7,7 @@ const HomePage = () => {
     <div>
       {/* Main Content */}
       <main className={styles.main}>
+       
         <h1>¡Bienvenido a Space of Sport!</h1>
         <p>Encuentra los mejores productos deportivos en un solo lugar.</p>
         <div className={styles.buttons}>
