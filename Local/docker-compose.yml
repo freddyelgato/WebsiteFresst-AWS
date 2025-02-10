@@ -232,9 +232,28 @@ services:
     networks:
       - app-network
       
+  # ========================
+  # Base de datos SQL
+  # ========================
+
+  branches-db:
+    build: ../BackEnd/databases/BranchesBD  # Construir la imagen desde el Dockerfile
+    container_name: branches_db
+    ports:
+      - "3306:3306"  # Puerto de MariaDB
+    environment:
+      MARIADB_ROOT_PASSWORD: "rootpassword"
+      MARIADB_DATABASE: "BranchesDB"
+    volumes:
+      - ../BackEnd/databases/BranchesBD/init.sql:/docker-entrypoint-initdb.d/init.sql  # Montar el script SQL
+    networks:
+      - bd-net
+
 
 networks:
   my_network:
     driver: bridge
   app-network:
+    driver: bridge
+  bd-net:
     driver: bridge
