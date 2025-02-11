@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         {/* Solo mostrar el Navbar si el usuario no es admin */}
-        {role !== "admin" && <Navbar />}
+        <Navbar />
         
         <main>{children}</main>
         

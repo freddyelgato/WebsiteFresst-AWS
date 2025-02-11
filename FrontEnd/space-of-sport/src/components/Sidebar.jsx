@@ -47,6 +47,13 @@ const Sidebar = ({ setActivePage }) => {
           >
             <i className="bi bi-box me-2"></i> Products
           </button>
+
+          <button
+            onClick={() => setActivePage("branches")}
+            className="btn btn-outline-light w-100 d-flex align-items-center"
+          >
+            <i className="bi bi-building me-2"></i> Branches
+          </button>
         </div>
 
         <hr className="border-light mt-3" />

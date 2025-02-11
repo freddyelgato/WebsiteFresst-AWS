@@ -233,11 +233,11 @@ services:
       - app-network
       
   # ========================
-  # Base de datos SQL
+  # Base de datos MariaDB
   # ========================
 
   branches-db:
-    build: ../BackEnd/databases/BranchesBD  # Construir la imagen desde el Dockerfile
+    build: ../BackEnd/databases/MariaBD  # Construir la imagen desde el Dockerfile
     container_name: branches_db
     ports:
       - "3306:3306"  # Puerto de MariaDB
@@ -245,9 +245,96 @@ services:
       MARIADB_ROOT_PASSWORD: "rootpassword"
       MARIADB_DATABASE: "BranchesDB"
     volumes:
-      - ../BackEnd/databases/BranchesBD/init.sql:/docker-entrypoint-initdb.d/init.sql  # Montar el script SQL
+      - ../BackEnd/databases/MariaBD/init.sql:/docker-entrypoint-initdb.d/init.sql  # Montar el script SQL
     networks:
       - bd-net
+
+  create:
+    build:
+      context: ../BackEnd/Domains/Branches/CreateBranch # Cambia esto por la ruta correcta al Dockerfile de tu microservicio
+      dockerfile: Dockerfile  # Si tu Dockerfile tiene otro nombre, cámbialo
+    container_name: create_service
+    ports:
+      - "5005:80"  # Cambia el puerto según lo que use tu servicio, en este caso está expuesto en 5000
+    environment:
+      DATABASE_URL: "mysql://root:rootpassword@branches-db:3306/BranchesDB"  # Actualiza aquí la URL completa
+    depends_on:
+      - branches-db
+    networks:
+      - bd-net
+
+  branchesmongo-db:
+    build:
+      context: ../BackEnd/databases/Branches
+      dockerfile: Dockerfile
+    container_name: branches-db
+    ports:
+      - "27019:27017"  
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - bd-net
+
+  # Servicio para crear Branches
+  create-branches:
+    build:
+      context: ../BackEnd/Domains/Branches/CreateBranch  # Ajusta la ruta a la carpeta correspondiente de Branches
+      dockerfile: Dockerfile
+    container_name: create-branches-container
+    ports:
+      - "4010:4000"  # Mapea el puerto 4010 de tu máquina al puerto 4000 del contenedor
+    environment:
+      - MONGO_URI=mongodb://user:password@branches-db:27019/spaceofsport_branches?authSource=admin  # Conecta con la base de datos de Branches
+    networks:
+      - bd-net
+    depends_on:
+      - branchesmongo-db # Cambia a branches-db, si ese es el nombre del contenedor MongoDB de Branches
+
+  # Servicio para editar Branches
+  edit-branches:
+    build:
+      context: ../BackEnd/Domains/Branches/EditBranch
+      dockerfile: Dockerfile
+    container_name: edit-branches-container
+    ports:
+      - "4011:4000"  # Mapea el puerto 4011 de tu máquina al puerto 4000 del contenedor
+    environment:
+      - MONGO_URI=mongodb://user:password@branches-db:27019/spaceofsport_branches?authSource=admin  
+    networks:
+      - bd-net
+    depends_on:
+      - branchesmongo-db
+
+  # Servicio para obtener una sucursal por ID
+  get-branch:
+    build:
+      context: ../BackEnd/Domains/Branches/GetBranchById
+      dockerfile: Dockerfile
+    container_name: get-branch-container
+    ports:
+      - "4012:4000"  # Mapea el puerto 4012 de tu máquina al puerto 4000 del contenedor
+    environment:
+      - MONGO_URI=mongodb://user:password@branches-db:27019/spaceofsport_branches?authSource=admin  
+    networks:
+      - bd-net
+    depends_on:
+      - branchesmongo-db
+
+  # Servicio para eliminar una sucursal por ID
+  delete-branch:
+    build:
+      context: ../BackEnd/Domains/Branches/DeleteBranchById
+      dockerfile: Dockerfile
+    container_name: delete-branch-container
+    ports:
+      - "4013:4000"  # Mapea el puerto 4013 de tu máquina al puerto 4000 del contenedor
+    environment:
+      - MONGO_URI=mongodb://user:password@branches-db:27019/spaceofsport_branches?authSource=admin  
+    networks:
+      - bd-net
+    depends_on:
+      - branchesmongo-db
 
 
 networks:
