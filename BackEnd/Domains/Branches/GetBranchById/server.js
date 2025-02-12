@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 // Rutas
 const branchesGetRoutes = require('./routes/branchesGet');
-app.use('/api/branches/get', branchesGetRoutes);
+app.use('/api/branches', branchesGetRoutes);
 
 // Manejo de errores
 app.use((err, req, res, next) => {

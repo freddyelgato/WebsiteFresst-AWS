@@ -289,7 +289,7 @@ services:
     networks:
       - bd-net
     depends_on:
-      - branchesmongo-db # Cambia a branches-db, si ese es el nombre del contenedor MongoDB de Branches
+      - branches-db
 
   # Servicio para editar Branches
   edit-branches:
@@ -304,7 +304,7 @@ services:
     networks:
       - bd-net
     depends_on:
-      - branchesmongo-db
+      - branches-db
 
   # Servicio para obtener una sucursal por ID
   get-branch:
@@ -319,7 +319,7 @@ services:
     networks:
       - bd-net
     depends_on:
-      - branchesmongo-db
+      - branches-db
 
   # Servicio para eliminar una sucursal por ID
   delete-branch:
@@ -334,7 +334,7 @@ services:
     networks:
       - bd-net
     depends_on:
-      - branchesmongo-db
+      - branches-db
 
 
 networks:

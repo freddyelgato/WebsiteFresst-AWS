@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -16,7 +15,6 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use(cors({ origin: "http://localhost:3000", methods: ["GET", "POST"] }));
 app.use(bodyParser.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas
 const branchesRoutes = require('./routes/branches');

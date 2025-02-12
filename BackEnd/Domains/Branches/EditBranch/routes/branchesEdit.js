@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const BranchEdit = require('../models/BranchEdit');
+const BranchEdit = require(path.join(__dirname, '../models/BranchEdit'));
 
 const router = express.Router();
 

@@ -6,8 +6,7 @@ const branchSchema = new mongoose.Schema({
   city: { type: String, required: true },
   email: { type: String, required: true },
   mobilePhone: { type: String, required: true },
-  landlinePhone: { type: String, required: true },
-  imageUrl: { type: String, required: true },
+  landlinePhone: { type: String, required: true }
 }, { collection: 'branches', timestamps: true });
 
 const Branch = mongoose.model('Branch', branchSchema);

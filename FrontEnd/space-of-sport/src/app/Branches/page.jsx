@@ -15,7 +15,7 @@ const BranchesPage = () => {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await fetch('http://localhost:4003/api/branches');
+        const response = await fetch('http://localhost:4012/api/branches'); // Nueva URL para obtener todas las sucursales
         const data = await response.json();
         setBranches(data.branches || []);
         setFilteredBranches(data.branches || []);
@@ -44,8 +44,8 @@ const BranchesPage = () => {
   const handleSaveBranch = async (formData, isEdit = false) => {
     try {
       const url = isEdit
-        ? `http://localhost:4002/api/branches/edit/${selectedBranch._id}`
-        : 'http://localhost:4000/api/branches/create';
+        ? `http://localhost:4011/api/branches/edit/${selectedBranch._id}` // URL para editar
+        : 'http://localhost:4010/api/branches/create'; // URL para crear
       const method = isEdit ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -79,7 +79,7 @@ const BranchesPage = () => {
 
   const handleDeleteBranch = async (branchId) => {
     try {
-      const response = await fetch(`http://localhost:4001/api/branches/${branchId}`, {
+      const response = await fetch(`http://localhost:4013/api/branches/delete/${branchId}`, { // Nueva URL para eliminar
         method: 'DELETE',
       });
 
