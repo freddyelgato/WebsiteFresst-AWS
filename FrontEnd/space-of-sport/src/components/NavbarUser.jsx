@@ -76,8 +76,8 @@ const NavbarUser = () => {
                         </li>
 
                         <li className="nav-item">
-                            <Link href="/Cart" className="nav-link">
-                                Cart
+                            <Link href="/Form" className="nav-link">
+                                Formulario
                             </Link>
                         </li>
                     </ul>

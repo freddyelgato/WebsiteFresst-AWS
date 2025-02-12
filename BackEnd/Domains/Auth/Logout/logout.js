@@ -14,8 +14,8 @@ router.post('/', async (req, res) => {
 
     try {
         // Notificar al servicio de Validación para revocar el token
-        const response = await axios.post('http://validate:3003/validation/revoke', { token });
-        //const response = await axios.post('http://localhost:3003/validation/revoke', { token });
+        //const response = await axios.post('http://validate:3003/validation/revoke', { token });
+        const response = await axios.post('http://localhost:3003/validation/revoke', { token });
 
         if (response.status === 200) {
             return res.json({ message: 'Logout exitoso' });
