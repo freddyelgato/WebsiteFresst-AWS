@@ -60,7 +60,7 @@ jobs:
               sudo docker rm get-product || echo "No existing process found"
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/get-product:latest
               sudo docker run -d -p 80:4003 --name get-product \
-                -e MONGO_URI=mongodb://34.228.111.178:27017 \
+                -e MONGO_URI=mongodb://54.89.143.59:27017 \
                 ${{ secrets.DOCKER_USERNAME }}/get-product
 
       - name: Build and push one Docker image Frontend
