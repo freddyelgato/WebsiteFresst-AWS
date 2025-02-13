@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push on Docker image
+      - name: Build and push Docker image for Products DB
         uses: docker/build-push-action@v4
         with:
           context: ./BackEnd/databases/Products
@@ -42,7 +42,7 @@ jobs:
                 -e MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_ROOT_PASSWORD }} \
                 ${{ secrets.DOCKER_USERNAME }}/products-db
 
-      - name: Build and push on Docker image
+      - name: Build and push Docker image for Get Product
         uses: docker/build-push-action@v4
         with:
           context: ./BackEnd/Domains/Product/Product_Search(ApiRest)
@@ -60,11 +60,11 @@ jobs:
               sudo docker stop get-product || echo "No existing process found"
               sudo docker rm get-product || echo "No existing process found"
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/get-product:latest
-              sudo docker run -d -p 80:4003 --name get-product \
+              sudo docker run -d -p 80:4003 --name get-product-${{ github.sha }} \
                 -e MONGO_URI=mongodb://54.89.143.59:27017 \
                 ${{ secrets.DOCKER_USERNAME }}/get-product
 
-      - name: Build and push one Docker image Frontend
+      - name: Build and push Docker image for Frontend
         uses: docker/build-push-action@v4
         with:
           context: ./FrontEnd/PW_Fresst
@@ -79,8 +79,8 @@ jobs:
             username: ${{ secrets.EC2_USER }}
             key: ${{ secrets.EC2_SSH_KEY }}
             script: |
-              sudo docker stop frontend || echo "No existing process found"
-              sudo docker rm frontend || echo "No existing process found"
+              sudo docker stop frontend-${{ github.sha }} || echo "No existing process found"
+              sudo docker rm frontend-${{ github.sha }} || echo "No existing process found"
               sudo docker container prune -f
               sudo docker image prune -af
               sudo docker volume prune -f
