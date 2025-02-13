@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB // Asegúrate de que sea *gorm.DB
+var DB *gorm.DB
 
 func ConnectDB() {
 	err := godotenv.Load()
@@ -25,6 +25,6 @@ func ConnectDB() {
 		log.Fatal("Error conectando a la base de datos:", err)
 	}
 
-	db.AutoMigrate(&models.Client{}) // Migración de la tabla
-	DB = db                          // Almacena la conexión en DB como *gorm.DB
+	db.AutoMigrate(&models.Client{})
+	DB = db
 }

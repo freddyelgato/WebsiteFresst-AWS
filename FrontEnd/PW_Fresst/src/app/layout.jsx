@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
   const [role, setRole] = useState(null);
 
   useEffect(() => {
-    require("bootstrap/dist/js/bootstrap.bundle.min.js");
+    require("bootstrap/dist/js/bootstrap.bundle.min");
 
     // Get the user's role from cookies
     const userRole = Cookies.get("role");

@@ -6,9 +6,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// SetupRoutes configura las rutas para las operaciones de clientes
+// SetupRoutes configures the routes for client operations
 func SetupRoutes(app *fiber.App) {
-	// Definir el grupo de rutas API
+	// Define the API route group
 	api := app.Group("/api")
-	api.Post("/clients", handlers.CreateClient) // Ruta para crear cliente
+	api.Post("/clients", handlers.CreateClient) // Route to create a client
 }

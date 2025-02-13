@@ -10,22 +10,22 @@ import (
 
 // @title ContactForm API
 // @version 1.0
-// @description API para ingresar clientes
+// @description API to enter clients
 // @host localhost:3006
 // @BasePath /api
 func main() {
-	// Crear una nueva aplicación Fiber
+	// Create a new Fiber application
 	app := fiber.New()
 
-	// Cargar la configuración de la base de datos
+	// Load the database configuration
 	database.ConnectDB()
 
-	// Habilitar el middleware CORS para permitir solicitudes de diferentes orígenes
+	// Enable CORS middleware to allow requests from different origins
 	app.Use(cors.New())
 
-	// Configurar las rutas
+	// Configure the routes
 	routes.SetupRoutes(app)
 
-	// Iniciar el servidor en el puerto 3005
+	// Start the server on port 3006
 	app.Listen(":3006")
 }

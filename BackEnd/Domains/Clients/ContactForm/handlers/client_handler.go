@@ -15,11 +15,11 @@ func CreateClient(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 	}
 
-	// Usamos GORM para insertar el cliente
+	// Using GORM to insert the client
 	if err := database.DB.Create(&client).Error; err != nil {
-		log.Println("Error al insertar el cliente:", err)
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Error al insertar el cliente"})
+		log.Println("Error inserting the client:", err)
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Error inserting the client"})
 	}
 
-	return c.Status(http.StatusOK).JSON(fiber.Map{"message": "Cliente creado exitosamente"})
+	return c.Status(http.StatusOK).JSON(fiber.Map{"message": "Client created successfully"})
 }

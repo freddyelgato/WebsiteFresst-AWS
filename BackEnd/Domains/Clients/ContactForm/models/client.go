@@ -4,10 +4,10 @@ import "gorm.io/gorm"
 
 type Client struct {
 	gorm.Model
-	Nombre    string `json:"nombre" gorm:"not null"`
-	Apellido  string `json:"apellido" gorm:"not null"`
-	Cedula    string `json:"cedula" gorm:"unique;not null"`
-	Telefono  string `json:"telefono"`
-	Ciudad    string `json:"ciudad"`
-	Direccion string `json:"direccion"`
+	FirstName string `json:"first_name" gorm:"not null"`
+	LastName  string `json:"last_name" gorm:"not null"`
+	IDNumber  string `json:"id_number" gorm:"unique;not null"`
+	Phone     string `json:"phone"`
+	City      string `json:"city"`
+	Address   string `json:"address"`
 }

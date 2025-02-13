@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API para ingresar clientes",
+        "description": "API to register clients",
         "title": "ContactForm API",
         "contact": {},
         "version": "1.0"

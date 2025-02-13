@@ -1,0 +1,37 @@
+##name: CI/CD for Login Microservice
+
+on:
+  push:
+    #branches:
+      #- test2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push Docker image for Login
+        uses: docker/build-push-action@v4
+        with:
+          context: ./BackEnd/Domains/Auth/Login
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/login-microservice:latest
+
+      - name: SSH and deploy to EC2 for Login
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS_SERVER }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo docker stop login-microservice || echo "No existing process found"
+            sudo docker rm login-microservice || echo "No existing process found"
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/login-microservice:latest
+            sudo docker run -d -p 8080:8080 --name login-microservice \
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              ${{ secrets.DOCKER_USERNAME }}/login-microservice:latest

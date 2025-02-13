@@ -2,7 +2,7 @@ basePath: /api
 host: localhost:3005
 info:
   contact: {}
-  description: API para ingresar clientes
+  description: API to register clients
   title: ContactForm API
   version: "1.0"
 paths: {}
