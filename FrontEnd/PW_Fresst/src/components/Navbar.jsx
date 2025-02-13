@@ -12,7 +12,7 @@ const Navbar = () => {
           <span className="bg-white text-primary px-2 py-1 rounded">B</span>
         </a>
         <Link href="/" className="navbar-brand">
-          Space of Sport
+          V_F Fresst
         </Link>
 
         {/* Botón de menú responsivo */}
