@@ -7,12 +7,12 @@ const NavbarUser = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen); // Cambiar estado para abrir/cerrar el menú
+        setIsDropdownOpen(!isDropdownOpen); // Toggle state to open/close the menu
     };
 
     const handleLogout = () => {
-        // Lógica para manejar el logout (por ejemplo, eliminar las cookies y redirigir)
-        window.location.href = '/login'; // Redirigir a la página de login
+        // Logic to handle logout (for example, removing cookies and redirecting)
+        window.location.href = '/login'; // Redirect to the login page
     };
 
     return (
@@ -26,7 +26,7 @@ const NavbarUser = () => {
                     Space of Sport
                 </Link>
 
-                {/* Botón de menú responsivo */}
+                {/* Responsive menu button */}
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -39,7 +39,7 @@ const NavbarUser = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                {/* Contenido del navbar */}
+                {/* Navbar content */}
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
@@ -53,7 +53,7 @@ const NavbarUser = () => {
                             </Link>
                         </li>
 
-                        {/* Lista Desplegable */}
+                        {/* Dropdown list */}
                         <li className="nav-item dropdown">
                             <a
                                 className="nav-link dropdown-toggle"
@@ -71,18 +71,18 @@ const NavbarUser = () => {
                                         All Products
                                     </Link>
                                 </li>
-                                {/* Otras categorías */}
+                                {/* Other categories */}
                             </ul>
                         </li>
 
                         <li className="nav-item">
-                            <Link href="/Cart" className="nav-link">
-                                Cart
+                            <Link href="/Form" className="nav-link">
+                                Form
                             </Link>
                         </li>
                     </ul>
 
-                    {/* Barra de búsqueda centrada */}
+                    {/* Centered search bar */}
                     <form
                         className="d-flex mx-auto"
                         style={{
@@ -100,10 +100,10 @@ const NavbarUser = () => {
                         />
                     </form>
 
-                    {/* Mostrar solo el círculo de la foto de perfil */}
+                    {/* Display only the profile picture circle */}
                     <ul className="nav navbar-nav ml-md-auto">
                         <li className="dropdown">
-                            {/* Botón de activación */}
+                            {/* Activation button */}
                             <a
                                 className="navbar-brand text-white fw-bold d-flex align-items-center dropdown-toggle"
                                 href="#"
@@ -114,7 +114,6 @@ const NavbarUser = () => {
                             >
 
                                 {/* Avatar */}
-
                                 <span
                                     className="bg-white rounded-circle d-inline-block"
                                     style={{
@@ -127,22 +126,18 @@ const NavbarUser = () => {
                                     }}
                                 ></span>
 
-
                                 {/* User Info */}
                                 <span className="ms-2 d-flex flex-column">
-                                    <span className="fw-bold" style={{ fontSize: "0.9rem" }}>Usuario</span>
+                                    <span className="fw-bold" style={{ fontSize: "0.9rem" }}>User</span>
                                     <span className="text-white-50" style={{ fontSize: "0.75rem" }}>User</span>
                                 </span>
 
                             </a>
 
-                            {/* Menú desplegable */}
+                            {/* Dropdown menu */}
                             <div className={`dropdown-menu ${isDropdownOpen ? "show" : ""}`} aria-labelledby="navbarDropdown">
-                                {/*<div className="dropdown-divider"></div>*/}
                                 <a className="dropdown-item" href="/logout">Logout</a>
                             </div>
-
-
                         </li>
                     </ul>
                 </div>
