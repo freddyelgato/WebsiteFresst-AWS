@@ -1,15 +1,15 @@
-{
+  {
     "swagger": "2.0",
     "info": {
       "title": "User Search API",
-      "description": "API para buscar usuarios por ID o nombre usando GraphQL",
+      "description": "API to search users by ID or name using GraphQL",
       "version": "1.0.0"
     },
     "paths": {
       "/graphql": {
         "post": {
-          "summary": "Realizar consultas GraphQL",
-          "description": "Permite buscar usuarios por ID o nombre",
+          "summary": "Perform GraphQL queries",
+          "description": "Allows searching for users by ID or name",
           "consumes": ["application/json"],
           "parameters": [
             {
@@ -28,11 +28,10 @@
           ],
           "responses": {
             "200": {
-              "description": "Respuesta exitosa"
+              "description": "Successful response"
             }
           }
         }
       }
     }
   }
-  

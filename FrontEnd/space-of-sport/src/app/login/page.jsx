@@ -31,7 +31,7 @@ const LoginPage = () => {
         setErrorMessage(null);
 
         if (!formData.email || !formData.password) {
-            setErrorMessage('Por favor ingrese ambos campos: email y contraseña');
+            setErrorMessage('Please enter both fields: email and password');
             setIsLoading(false);
             return;
         }
@@ -43,17 +43,17 @@ const LoginPage = () => {
             Cookies.set('token', token, { expires: 5 });
             Cookies.set('role', role, { expires: 5 });
 
-            alert(`Bienvenido, ${role === 'admin' ? 'Admin' : 'Usuario'}`);
+            alert(`Welcome, ${role === 'admin' ? 'Admin' : 'User'}`);
             router.push(role === 'admin' ? '/admin' : '/user');
         } catch (error) {
             const status = error.response?.status;
             const messages = {
-                400: 'Datos inválidos. Verifica los campos.',
-                401: 'Credenciales incorrectas.',
-                500: 'Error en el servidor. Intenta más tarde.',
+                400: 'Invalid data. Check the fields.',
+                401: 'Incorrect credentials.',
+                500: 'Server error. Please try again later.',
             };
 
-            setErrorMessage(messages[status] || 'Error desconocido. Intenta nuevamente.');
+            setErrorMessage(messages[status] || 'Unknown error. Please try again.');
         } finally {
             setIsLoading(false);
         }
@@ -62,7 +62,7 @@ const LoginPage = () => {
     return (
         <div className="login-container">
             <div className="login-box">
-                <h1 className="login-title">Iniciar Sesión</h1>
+                <h1 className="login-title">Login</h1>
                 <form onSubmit={handleLogin}>
                     {['email', 'password'].map((field) => (
                         <div className="form-group" key={field}>
@@ -82,11 +82,11 @@ const LoginPage = () => {
                     ))}
                     {errorMessage && <div className="error-message">{errorMessage}</div>}
                     <button type="submit" disabled={isLoading} className="login-button">
-                        {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
+                        {isLoading ? 'Loading...' : 'Login'}
                     </button>
                 </form>
                 <p className="register-link">
-                    ¿No tienes cuenta? <a href="/register">Regístrate</a>
+                    Don't have an account? <a href="/register">Sign up</a>
                 </p>
                 <button onClick={() => router.push('/')} className="back-home-button">
                     Back to Home

@@ -1,19 +1,19 @@
 FROM node:18-alpine
 
-# Establece el directorio de trabajo
+# Set the working directory
 WORKDIR /usr/src/app
 
-# Copia los archivos de dependencias
+# Copy dependency files
 COPY package*.json ./
 
-# Instala las dependencias
+# Install dependencies
 RUN npm install
 
-# Copia el resto de los archivos de la aplicación
+# Copy the rest of the application files
 COPY . .
 
-# Exponer el puerto 3000
+# Expose port 3000
 EXPOSE 3000
 
-# Asegurarse de que Next.js escuche en todas las interfaces de red
+# Ensure Next.js listens on all network interfaces
 CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0"]

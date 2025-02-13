@@ -1,9 +1,9 @@
-"use client"; // Asegura que este archivo se ejecute solo en el cliente
-import React, { useEffect, useState } from "react"; // Importar React, useEffect y useState
+"use client"; // Ensures this file runs only on the client
+import React, { useEffect, useState } from "react"; // Import React, useEffect, and useState
 import Navbar from "../components/Navbar";
-import Cookies from "js-cookie"; // Importar Cookies para verificar el rol del usuario
+import Cookies from "js-cookie"; // Import Cookies to check the user's role
 import "../styles/globals.css";
-import "bootstrap/dist/css/bootstrap.min.css"; // Estilos de Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap styles
 
 export default function RootLayout({ children }) {
   const [role, setRole] = useState(null);
@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
 
-    // Obtener el rol del usuario desde las cookies
+    // Get the user's role from cookies
     const userRole = Cookies.get("role");
     setRole(userRole);
   }, []);
@@ -19,13 +19,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {/* Solo mostrar el Navbar si el usuario no es admin */}
+        {/* Only show the Navbar if the user is not an admin */}
         <Navbar />
         
         <main>{children}</main>
         
         <footer className="footer">
-          <p>© 2025 Space of Sport - Todos los derechos reservados.</p>
+          <p>© 2025 Space of Sport - All rights reserved.</p>
         </footer>
       </body>
     </html>

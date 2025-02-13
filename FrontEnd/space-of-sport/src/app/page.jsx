@@ -8,14 +8,14 @@ const HomePage = () => {
       {/* Main Content */}
       <main className={styles.main}>
        
-        <h1>¡Bienvenido a Space of Sport!</h1>
-        <p>Encuentra los mejores productos deportivos en un solo lugar.</p>
+        <h1>Welcome to Space of Sport!</h1>
+        <p>Find the best sports products all in one place.</p>
         <div className={styles.buttons}>
           <a href="/products" className={styles.btn}>
-            Ver Productos
+            View Products
           </a>
           <a href="/cart" className={styles.btn}>
-            Ir al Carrito
+            Go to Cart
           </a>
         </div>
       </main>

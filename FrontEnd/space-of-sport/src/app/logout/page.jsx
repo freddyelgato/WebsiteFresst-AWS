@@ -12,52 +12,52 @@ const LogoutPage = () => {
         const token = Cookies.get('token');
 
         if (!token) {
-            // Si no hay token, redirigir al login
+            // If there's no token, redirect to login
             router.push('/login');
             return;
         }
 
         const handleLogout = async () => {
             try {
-                // Enviar la solicitud de logout al backend
+                // Send the logout request to the backend
                 const response = await axios.post('http://localhost:3002/logout', {}, {
                     headers: { Authorization: `Bearer ${token}` },
                     withCredentials: true
                 });
 
                 if (response.status === 200) {
-                    // Eliminar las cookies y redirigir al login
+                    // Remove the cookies and redirect to login
                     Cookies.remove('token');
                     Cookies.remove('role');
-                    alert('Sesión cerrada exitosamente.');
+                    alert('Logged out successfully.');
                     router.push('/login');
                 }
             } catch (error) {
-                // Manejar el error si no se puede cerrar sesión
-                console.error('Error al cerrar sesión:', error.response?.data?.message || error.message);
+                // Handle error if logout fails
+                console.error('Error logging out:', error.response?.data?.message || error.message);
 
                 if (error.response) {
-                    // Manejo de errores del servidor
+                    // Handle server errors
                     switch (error.response.status) {
                         case 400:
-                            alert('Token inválido. Por favor, inicia sesión nuevamente.');
+                            alert('Invalid token. Please log in again.');
                             break;
                         case 401:
-                            alert('No autorizado. Por favor, inicia sesión nuevamente.');
+                            alert('Unauthorized. Please log in again.');
                             break;
                         case 500:
-                            alert('Error en el servidor. Por favor, intenta de nuevo más tarde.');
+                            alert('Server error. Please try again later.');
                             break;
                         default:
-                            alert('Error desconocido: ' + error.response.data.message);
+                            alert('Unknown error: ' + error.response.data.message);
                     }
                 } else if (error.request) {
-                    alert('Error en la solicitud. No se recibió respuesta del servidor.');
+                    alert('Request error. No response from the server.');
                 } else {
-                    alert('Error desconocido: ' + error.message);
+                    alert('Unknown error: ' + error.message);
                 }
 
-                // Redirigir al login incluso si hay errores
+                // Redirect to login even if there's an error
                 router.push('/login');
             }
         };
@@ -67,7 +67,7 @@ const LogoutPage = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <p>Cerrando sesión...</p>
+            <p>Logging out...</p>
         </div>
     );
 };

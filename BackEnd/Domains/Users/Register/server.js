@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:3000', // URL del frontend
+    origin: 'http://localhost:3000', // Frontend URL
     credentials: true
 }));
 app.use(express.json());

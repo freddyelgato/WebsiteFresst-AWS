@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express();
 
-// Configuración de CORS
+// CORS configuration
 app.use(cors({
     origin: "http://localhost:3000",
     methods: ["GET"],
@@ -13,12 +13,12 @@ app.use(cors({
 // Middleware
 app.use(bodyParser.json());
 
-// Rutas
+// Routes
 const searchRoutes = require('./routes/search');
 app.use('/api/products', searchRoutes);
 
-// Configuración del servidor
-const PORT = 4003; // Puerto exclusivo para este microservicio
+// Server configuration
+const PORT = 4003; // Port exclusive for this microservice
 app.listen(PORT, () => {
     console.log(`Search Products microservice running on http://localhost:${PORT}`);
 });

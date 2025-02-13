@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const app = express();
 
-// Configuración de CORS
+// CORS configuration
 app.use(cors({
     origin: "http://localhost:3000",
     methods: ["PUT"],
@@ -14,12 +14,12 @@ app.use(cors({
 // Middleware
 app.use(bodyParser.json());
 
-// Rutas
+// Routes
 const editRoutes = require('./routes/edit');
 app.use('/api/edit', editRoutes);
 
-// Configuración del servidor
-const PORT = 4002; // Puerto exclusivo para este microservicio
+// Server configuration
+const PORT = 4002; // Port exclusive to this microservice
 app.listen(PORT, () => {
     console.log(`Edit Products microservice running on http://localhost:${PORT}`);
 });

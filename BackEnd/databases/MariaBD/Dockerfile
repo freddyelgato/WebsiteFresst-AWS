@@ -1,14 +1,13 @@
-# Usar la imagen oficial de MariaDB más ligera
+# Use the official, lightweight MariaDB image
 FROM mariadb:latest  
 
-# Establecer variables de entorno
+# Set environment variables for the root password and database name
 ENV MARIADB_ROOT_PASSWORD=rootpassword
 ENV MARIADB_DATABASE=BranchesDB
 
-# Exponer el puerto de MariaDB
+# Expose the MariaDB port (3306) for external connections
 EXPOSE 3306  
 
-# Copiar el archivo SQL de inicialización al contenedor
+# Copy the SQL initialization file into the container's /docker-entrypoint-initdb.d/ directory
+# The file will be automatically executed during the initial database setup
 COPY init.sql /docker-entrypoint-initdb.d/
-
-

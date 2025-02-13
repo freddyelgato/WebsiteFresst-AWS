@@ -6,13 +6,13 @@ const path = require('path');
 
 const app = express();
 
-// Configuración de CORS
+// CORS configuration
 app.use(cors({
     origin: "http://localhost:3000",
     methods: ["GET", "DELETE"],
 }));
 
-// Ruta raíz
+// Root route
 app.get('/', (req, res) => {
     res.send('Welcome to the Delete Products API');
 });
@@ -20,19 +20,18 @@ app.get('/', (req, res) => {
 // Middleware
 app.use(bodyParser.json());
 
-
-// Rutas
+// Routes
 const deleteRoutes = require('./routes/delete');
 app.use('/api/products', deleteRoutes);
 
-// Middleware para manejo de errores
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Internal Server Error' });
 });
 
-// Configuración del servidor
-const PORT = 4001; // Puerto exclusivo para este microservicio
+// Server setup
+const PORT = 4001; // Port dedicated to this microservice
 app.listen(PORT, () => {
     console.log(`Delete Products microservice running on http://localhost:${PORT}`);
 });

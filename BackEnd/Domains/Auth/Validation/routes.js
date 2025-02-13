@@ -1,15 +1,18 @@
+// Importing express and the validationController for handling requests
 const express = require('express');
 const validationController = require('./Validation');
 
+// Initialize the router from express
 const router = express.Router();
 
-// Ruta para autenticar credenciales
+// Route to authenticate credentials
 router.post('/authenticate', validationController);
 
-// Ruta para validar un token
+// Route to validate a token
 router.post('/validate', validationController);
 
-// Ruta para revocar un token
+// Route to revoke a token
 router.post('/revoke', validationController);
 
+// Exporting the router so it can be used in other parts of the application
 module.exports = router;

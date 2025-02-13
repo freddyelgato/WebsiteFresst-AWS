@@ -1,17 +1,17 @@
-# Usar una imagen base de Python
+# Use a base Python image
 FROM python:3.9-slim
 
-# Establecer el directorio de trabajo en el contenedor
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copiar los archivos de tu proyecto al contenedor
+# Copy your project files into the container
 COPY . /app
 
-# Instalar las dependencias necesarias
+# Install the required dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Exponer el puerto en el que corre Flask
+# Expose the port on which Flask is running
 EXPOSE 5003
 
-# Comando para correr el microservicio con Gunicorn
+# Command to run the microservice with Gunicorn
 CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5003"]

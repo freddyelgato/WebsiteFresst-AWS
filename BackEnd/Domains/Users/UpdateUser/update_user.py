@@ -2,12 +2,12 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
-# Cargar las variables de entorno
+# Load environment variables
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 def update_user(user_id, name, email):
-    """Actualiza el nombre y correo de un usuario por su ID"""
+    """Updates the name and email of a user by their ID"""
     try:
         conn = psycopg2.connect(DATABASE_URL)
         cursor = conn.cursor()

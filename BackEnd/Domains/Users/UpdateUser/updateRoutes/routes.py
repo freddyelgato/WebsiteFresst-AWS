@@ -7,14 +7,14 @@ CORS(update_user_bp)
 
 @update_user_bp.route("/update/<int:user_id>", methods=["PUT"])
 def update_user_route(user_id):
-    """Ruta para actualizar el nombre y email del usuario"""
+    """Route to update the user's name and email"""
     data = request.json
     if "name" not in data or "email" not in data:
-        return jsonify({"error": "Faltan datos requeridos"}), 400
+        return jsonify({"error": "Missing required data"}), 400
 
     result = update_user(user_id, data["name"], data["email"])
 
     if "error" in result:
         return jsonify(result), 500
 
-    return jsonify({"message": "Usuario actualizado", "user": result}), 200
+    return jsonify({"message": "User updated", "user": result}), 200

@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv()  # Cargar las variables de entorno del archivo .env
+load_dotenv()  # Load environment variables from the .env file
 
 class Config:
     DATABASE_URL = os.getenv("DATABASE_URL")

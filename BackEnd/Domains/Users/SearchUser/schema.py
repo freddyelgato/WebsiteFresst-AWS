@@ -1,13 +1,13 @@
 import graphene
 from search_user import search_user_by_id, search_user_by_name
 
-# Definir tipo de dato para usuarios
+# Define the data type for users
 class UserType(graphene.ObjectType):
     id = graphene.Int()
     name = graphene.String()
     email = graphene.String()
 
-# Definir las consultas de GraphQL
+# Define GraphQL queries
 class Query(graphene.ObjectType):
     search_user_by_id = graphene.Field(UserType, id=graphene.Int(required=True))
     search_user_by_name = graphene.List(UserType, name=graphene.String(required=True))
@@ -20,5 +20,5 @@ class Query(graphene.ObjectType):
         users = search_user_by_name(name)
         return [UserType(id=user[0], name=user[1], email=user[2]) for user in users] if users else []
 
-# Crear esquema GraphQL
+# Create GraphQL schema
 schema = graphene.Schema(query=Query)

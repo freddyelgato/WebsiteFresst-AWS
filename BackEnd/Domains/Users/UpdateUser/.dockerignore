@@ -1,27 +1,27 @@
-# Ignorar el entorno virtual
+# Ignore the virtual environment
 venv/
 env/
 
-# Ignorar archivos de configuración específicos de IDEs
+# Ignore IDE-specific configuration files
 .idea/
 .vscode/
 
-# Ignorar archivos de dependencias locales que no sean necesarios en Docker
+# Ignore local dependency files not needed in Docker
 *.pyc
 *.pyo
 *.pyd
 __pycache__
 
-# Ignorar archivos de caché
+# Ignore cache files
 *.log
 *.sqlite3
 
-# Ignorar el archivo de base de datos si es local
+# Ignore the local database file
 db.sqlite3
 
-# Ignorar archivos de configuración local
+# Ignore local configuration files
 *.env
 
-# Ignorar el archivo de pruebas y otros archivos temporales
+# Ignore test files and other temporary files
 tests/
 *.bak

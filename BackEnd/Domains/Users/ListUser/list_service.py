@@ -1,7 +1,7 @@
 from config import get_db_connection
 
 def get_all_users():
-    """Obtiene todos los usuarios de la base de datos"""
+    """Gets all users from the database"""
     conn = get_db_connection()
     cursor = conn.cursor()
     

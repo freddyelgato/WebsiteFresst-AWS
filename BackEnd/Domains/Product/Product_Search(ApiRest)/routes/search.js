@@ -1,26 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config(); // Cargar variables de entorno
+require('dotenv').config(); // Load environment variables
 
 const router = express.Router();
 
-// Conexión a MongoDB
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI, { 
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('Connected to MongoDB')).catch(err => console.error('MongoDB connection error:', err));
 
-// Definimos el esquema y modelo de producto
+// Define the product schema and model
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     price: { type: Number, required: true },
     category: { type: String, required: true },
     imageUrl: { type: String, required: true },
-}, { collection: 'products', timestamps: true }); // Especificar la colección
+}, { collection: 'products', timestamps: true }); // Specify the collection
 
 const Product = mongoose.model('Product', productSchema);
 
-// Ruta para obtener todos los productos
+// Route to get all products
 router.get('/', async (req, res) => {
     try {
         const products = await Product.find();
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Ruta para buscar productos
+// Route to search for products
 router.get('/search', async (req, res) => {
     try {
         const { query } = req.query;
@@ -41,7 +41,7 @@ router.get('/search', async (req, res) => {
         }
 
         const products = await Product.find({
-            name: { $regex: query, $options: 'i' } // Búsqueda insensible a mayúsculas
+            name: { $regex: query, $options: 'i' } // Case-insensitive search
         });
 
         res.status(200).json({ status: 'success', products });

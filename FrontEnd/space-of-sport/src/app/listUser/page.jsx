@@ -6,7 +6,6 @@ import { searchUserById, searchUserByName } from "@/utils/api";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
 export default function ListUsers() {
   const [users, setUsers] = useState([]);
   const [filteredUser, setFilteredUser] = useState(null);
@@ -26,43 +25,43 @@ export default function ListUsers() {
       const response = await axios.get(`http://localhost:5000/users`);
       setUsers(response.data);
     } catch (error) {
-      console.error("Error al obtener usuarios:", error);
+      console.error("Error fetching users:", error);
     }
   };
+
   const handleSearch = async () => {
     if (!input.trim()) {
-      setResult([]);  // Si el input está vacío, reseteamos los resultados
-      fetchUsers();  // Recargamos la lista de todos los usuarios
+      setResult([]);  // If the input is empty, reset the results
+      fetchUsers();  // Reload the full user list
       return;
     }
 
     let result = [];
-    // Aseguramos que el input sea un número para la búsqueda por ID
+    // Ensure the input is a number for searching by ID
     if (!isNaN(input.trim())) {
-      result = await searchUserById(parseInt(input.trim())); // Buscar por ID
+      result = await searchUserById(parseInt(input.trim())); // Search by ID
     } else {
-      result = await searchUserByName(input.trim()); // Buscar por nombre
+      result = await searchUserByName(input.trim()); // Search by name
     }
 
-    // Aseguramos que `result` sea un array antes de actualizar el estado
-    setResult(Array.isArray(result) ? result : []); // Actualiza el estado con un array vacío si no es un array
+    // Ensure `result` is an array before updating state
+    setResult(Array.isArray(result) ? result : []); // Update the state with an empty array if it's not an array
   };
-
 
   const deleteUser = async (id) => {
     try {
       await axios.delete(`http://localhost:5001/delete/${id}`);
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
-      console.error("Error al eliminar usuario:", error);
+      console.error("Error deleting user:", error);
     }
   };
 
   const updateUser = async (id, updatedName, updatedEmail) => {
-    console.log("Datos a enviar:", { updatedName, updatedEmail });
+    console.log("Data to send:", { updatedName, updatedEmail });
 
     if (!updatedName || !updatedEmail) {
-      Swal.fire("Error", "Los campos de nombre y correo son obligatorios.", "error");
+      Swal.fire("Error", "Name and email fields are required.", "error");
       return;
     }
 
@@ -72,11 +71,11 @@ export default function ListUsers() {
         email: updatedEmail,
       });
 
-      Swal.fire("Actualizado", "El usuario ha sido actualizado.", "success");
-      fetchUsers(); // Recargar la lista de usuarios
+      Swal.fire("Updated", "The user has been updated.", "success");
+      fetchUsers(); // Reload the user list
     } catch (error) {
-      console.error("Error al actualizar usuario:", error);
-      Swal.fire("Error", "No se pudo actualizar el usuario.", "error");
+      console.error("Error updating user:", error);
+      Swal.fire("Error", "Failed to update the user.", "error");
     }
   };
 
@@ -86,20 +85,20 @@ export default function ListUsers() {
     setEmail(user.email);
 
     Swal.fire({
-      title: "Editar Usuario",
+      title: "Edit User",
       html: `
-        <input id="swal-name" class="swal2-input" placeholder="Nombre" value="${user.name}">
-        <input id="swal-email" class="swal2-input" placeholder="Correo" value="${user.email}">
+        <input id="swal-name" class="swal2-input" placeholder="Name" value="${user.name}">
+        <input id="swal-email" class="swal2-input" placeholder="Email" value="${user.email}">
       `,
       showCancelButton: true,
-      confirmButtonText: "Actualizar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: "Update",
+      cancelButtonText: "Cancel",
       preConfirm: () => {
         const newName = document.getElementById("swal-name").value.trim();
         const newEmail = document.getElementById("swal-email").value.trim();
 
         if (!newName || !newEmail) {
-          Swal.showValidationMessage("Por favor, ingrese un nombre y un correo.");
+          Swal.showValidationMessage("Please enter a name and an email.");
           return false;
         }
 
@@ -111,20 +110,21 @@ export default function ListUsers() {
       }
     });
   };
+
   const handleDelete = (id) => {
     Swal.fire({
-      title: "¿Estás seguro?",
-      text: "No podrás revertir esta acción.",
+      title: "Are you sure?",
+      text: "You won't be able to revert this action.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteUser(id); // Llamar a la función de eliminación si el usuario confirma
-        Swal.fire("Eliminado", "El usuario ha sido eliminado.", "success");
+        deleteUser(id); // Call the delete function if the user confirms
+        Swal.fire("Deleted", "The user has been deleted.", "success");
       }
     });
   };
@@ -132,31 +132,31 @@ export default function ListUsers() {
   return (
     <div className="card-body">
       <div className="table-responsive">
-        {/* 🔍 Input de búsqueda + Botón */}
+        {/* 🔍 Search Input + Button */}
         <div className="d-flex justify-content-end mb-3">
           <input
             type="text"
-            className="form-control me-2 w-auto"  // Cambié a w-auto para ajustar el ancho
-            placeholder="Buscar"
+            className="form-control me-2 w-auto"  // Changed to w-auto to adjust the width
+            placeholder="Search"
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <button className="btn btn-primary px-4 py-2" onClick={handleSearch}> {/* Ajuste para hacerlo más rectangular */}
-            <FaSearch /> Buscar
+          <button className="btn btn-primary px-4 py-2" onClick={handleSearch}> {/* Adjusted to make it more rectangular */}
+            <FaSearch /> Search
           </button>
         </div>
         <table className="table table-striped table-hover">
           <thead className="table-dark">
             <tr>
               <th>ID</th>
-              <th>Nombre</th>
+              <th>Name</th>
               <th>Email</th>
-              <th>Rol</th>
-              <th>Acciones</th>
+              <th>Role</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(result) && result.length === 0 && input.trim() === "" ? (  // Si el input está vacío y no hay resultados
+            {Array.isArray(result) && result.length === 0 && input.trim() === "" ? (  // If the input is empty and there are no results
               users && users.length > 0 ? (
                 users.map((user) => (
                   <tr key={user.id}>
@@ -170,10 +170,10 @@ export default function ListUsers() {
                     </td>
                     <td>
                       <button className="btn btn-sm btn-warning me-2" onClick={() => handleUpdate(user)}>
-                        <FaEdit /> Editar
+                        <FaEdit /> Edit
                       </button>
                       <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id)}>
-                        <FaTrash /> Eliminar
+                        <FaTrash /> Delete
                       </button>
                     </td>
                   </tr>
@@ -181,17 +181,17 @@ export default function ListUsers() {
               ) : (
                 <tr>
                   <td colSpan="5" className="text-center text-muted">
-                    No hay usuarios disponibles
+                    No users available
                   </td>
                 </tr>
               )
-            ) : Array.isArray(result) && result.length === 0 ? (  // Si no se encuentran resultados de la búsqueda
+            ) : Array.isArray(result) && result.length === 0 ? (  // If no search results are found
               <tr>
                 <td colSpan="5" className="text-center text-muted">
-                  No se encontraron resultados.
+                  No results found.
                 </td>
               </tr>
-            ) : (  // Si hay resultados
+            ) : (  // If there are search results
               Array.isArray(result) && result.length > 0 ? (
                 result.map((user) => (
                   <tr key={user.id}>
@@ -205,10 +205,10 @@ export default function ListUsers() {
                     </td>
                     <td>
                       <button className="btn btn-sm btn-warning me-2" onClick={() => handleUpdate(user)}>
-                        <FaEdit /> Editar
+                        <FaEdit /> Edit
                       </button>
                       <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id)}>
-                        <FaTrash /> Eliminar
+                        <FaTrash /> Delete
                       </button>
                     </td>
                   </tr>
@@ -216,7 +216,7 @@ export default function ListUsers() {
               ) : (
                 <tr>
                   <td colSpan="5" className="text-center text-muted">
-                    No se encontraron resultados.
+                    No results found.
                   </td>
                 </tr>
               )

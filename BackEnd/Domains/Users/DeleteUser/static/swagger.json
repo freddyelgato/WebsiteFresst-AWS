@@ -1,4 +1,4 @@
-{
+  {
     "swagger": "2.0",
     "info": {
       "title": "Delete User API",
@@ -7,7 +7,7 @@
     "paths": {
       "/api/users/delete/{user_id}": {
         "delete": {
-          "summary": "Eliminar un usuario",
+          "summary": "Delete a user",
           "parameters": [
             {
               "name": "user_id",
@@ -18,17 +18,16 @@
           ],
           "responses": {
             "200": {
-              "description": "Usuario eliminado exitosamente"
+              "description": "User successfully deleted"
             },
             "404": {
-              "description": "Usuario no encontrado"
+              "description": "User not found"
             },
             "500": {
-              "description": "Error del servidor"
+              "description": "Server error"
             }
           }
         }
       }
     }
   }
-  

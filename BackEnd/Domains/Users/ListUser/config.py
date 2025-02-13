@@ -2,18 +2,19 @@ import os
 from dotenv import load_dotenv
 import psycopg2
 
-# Cargar variables de entorno
+# Load environment variables
 load_dotenv()
 
-# Obtener la URL de la base de datos
+# Get the database URL from environment variables
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 def get_db_connection():
-    """Establece conexión con la base de datos"""
+    """Establish a connection to the database"""
     try:
+        # Connect to PostgreSQL using the database URL
         conn = psycopg2.connect(DATABASE_URL)
-        print("✅ Conexión exitosa a PostgreSQL desde Flask")
+        print("✅ Successful connection to PostgreSQL from Flask")
         return conn
     except Exception as e:
-        print("❌ Error al conectar a PostgreSQL:", e)
+        print("❌ Error connecting to PostgreSQL:", e)
         return None

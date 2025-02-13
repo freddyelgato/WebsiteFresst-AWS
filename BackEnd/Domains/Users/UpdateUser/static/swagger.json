@@ -2,13 +2,13 @@
   "swagger": "2.0",
   "info": {
     "title": "Update User API",
-    "description": "API para actualizar usuarios en PostgreSQL",
+    "description": "API to update users in PostgreSQL",
     "version": "1.0.0"
   },
   "paths": {
     "/update-user/{user_id}": {
       "put": {
-        "summary": "Actualizar usuario",
+        "summary": "Update user",
         "parameters": [
           {
             "name": "user_id",
@@ -30,9 +30,9 @@
           }
         ],
         "responses": {
-          "200": {"description": "Usuario actualizado"},
-          "400": {"description": "Datos faltantes"},
-          "500": {"description": "Error del servidor"}
+          "200": {"description": "User updated"},
+          "400": {"description": "Missing data"},
+          "500": {"description": "Server error"}
         }
       }
     }

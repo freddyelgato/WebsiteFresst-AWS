@@ -25,11 +25,11 @@ const UserPage = () => {
                         <img
                             className="img-fluid rounded mb-4 mb-lg-0"
                             src="/image3.jpg"
-                            alt="Vitrinas y Frigoríficos Fresst"
+                            alt="Fresst Display Cases and Refrigerators"
                         />
                     </div>
                     <div className="col-lg-5">
-                        <h1 className="font-weight-light">Welcome to Vitrinas y Frigoríficos Fresst!</h1>
+                        <h1 className="font-weight-light">Welcome to Fresst Display Cases and Refrigerators!</h1>
                         <p>Leaders in industrial refrigeration and display solutions.</p>
                         <a className="btn btn-primary btn-lg" href="/products">
                             Discover Our Products

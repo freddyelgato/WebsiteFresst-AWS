@@ -7,21 +7,21 @@ const cors = require('cors');
 
 const app = express();
 
-// Configuración de CORS
+// CORS configuration
 app.use(cors({
-    origin: "http://localhost:3000", // Permite solicitudes desde el frontend
-    methods: ["GET", "POST"], // Métodos permitidos
+    origin: "http://localhost:3000", // Allows requests from the frontend
+    methods: ["GET", "POST"], // Allowed methods
 }));
 
-// Ruta raíz
+// Root route
 app.get('/', (req, res) => {
     res.send('Welcome to the Products API');
 });
 
-// Configuración de almacenamiento de imágenes (Multer)
+// Image storage configuration (Multer)
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, 'uploads')); // Carpeta 'uploads' dentro de Product
+        cb(null, path.join(__dirname, 'uploads')); // 'uploads' folder within Product
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -29,24 +29,22 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-
-
 // Middleware
 app.use(bodyParser.json());
-app.use('/uploads', express.static(path.join(__dirname,'uploads'))); // Carpeta para imágenes
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Folder for images
 
-// Rutas
-const productsRoutes = require('./routes/products'); // Correcta ubicación del archivo products.js
+// Routes
+const productsRoutes = require('./routes/products'); // Correct file path for products.js
 app.use('/api/create', productsRoutes);
 
-// Middleware para manejo de errores
+// Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Internal Server Error' });
 });
 
-// Configuración del servidor
-const PORT = 4000; // Puerto exclusivo para este microservicio
+// Server configuration
+const PORT = 4000; // Port dedicated to this microservice
 app.listen(PORT, () => {
     console.log(`Products microservice running on http://localhost:${PORT}`);
 });

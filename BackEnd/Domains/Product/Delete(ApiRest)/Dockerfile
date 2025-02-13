@@ -1,20 +1,20 @@
-# Usa una imagen oficial de Node.js
+# Use an official Node.js image
 FROM node:18
 
-# Establece el directorio de trabajo en el contenedor
+# Set the working directory in the container
 WORKDIR /app
 
-# Copia el package.json y package-lock.json al contenedor
+# Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-# Instala las dependencias
+# Install the dependencies
 RUN npm install
 
-# Copia todo el código fuente al contenedor
+# Copy all the source code to the container
 COPY . .
 
-# Expone el puerto del microservicio
+# Expose the microservice port
 EXPOSE 4001
 
-# Define el comando para ejecutar el servidor
+# Define the command to run the server
 CMD ["npm", "start"]

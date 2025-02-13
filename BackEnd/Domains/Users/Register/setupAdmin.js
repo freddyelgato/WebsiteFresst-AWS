@@ -4,15 +4,15 @@ import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
-const { Pool } = pkg;  // Desestructuración de Pool desde el objeto importado
+const { Pool } = pkg;  // Destructuring Pool from the imported object
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-// Hashear la contraseña del administrador
-const hashedPassword = await bcrypt.hash('admin123', 10); // Número de rondas de hash, ajusta según sea necesario
-console.log('Contraseña hasheada:', hashedPassword);
+// Hash the admin password
+const hashedPassword = await bcrypt.hash('admin123', 10); // Number of hash rounds, adjust as needed
+console.log('Hashed password:', hashedPassword);
 
-// Luego, inserta el usuario con la contraseña hasheada en la base de datos
+// Then, insert the user with the hashed password into the database
 const insertUser = await pool.query('INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4)', ['Admin', 'admin@email.com', hashedPassword, 'admin']);
 
-console.log('Usuario admin creado con éxito');
+console.log('Admin user created successfully');

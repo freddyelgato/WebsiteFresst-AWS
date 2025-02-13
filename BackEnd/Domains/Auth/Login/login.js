@@ -1,66 +1,66 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const axios = require('axios');
-const { Pool } = require('pg');
-require('dotenv').config();
-console.log("DATABASE_URL:", process.env.DATABASE_URL);
+const express = require('express'); // Import express for routing
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken for generating JWT tokens
+const bcrypt = require('bcryptjs'); // Import bcryptjs for password hashing and comparison
+const axios = require('axios'); // Import axios for making HTTP requests to external services
+const { Pool } = require('pg'); // Import Pool from pg for PostgreSQL connection pooling
+require('dotenv').config(); // Load environment variables from .env file
 
-const router = express.Router();
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+console.log("DATABASE_URL:", process.env.DATABASE_URL); // Log the database URL to the console (for debugging)
 
-router.post('/', async (req, res) => {
-    const { email, password } = req.body;
-    console.log("Email recibido:", email);
-    console.log("Password recibido:", password);
+const router = express.Router(); // Create a new express router
+const pool = new Pool({ connectionString: process.env.DATABASE_URL }); // Create a new PostgreSQL pool using the database URL from environment variables
 
-    // Validar que los campos email y password estén presentes
+router.post('/', async (req, res) => { // Define a POST route for login
+    const { email, password } = req.body; // Extract email and password from the request body
+    console.log("Email received:", email); // Log received email for debugging
+    console.log("Password received:", password); // Log received password for debugging
+
+    // Validate that both email and password are provided in the request body
     if (!email || !password) {
-        return res.status(400).json({ message: 'Email y contraseña son requeridos' });
+        return res.status(400).json({ message: 'Email and password are required' }); // Respond with a 400 if any field is missing
     }
 
     try {
-        // Consultar el usuario en la base de datos por su email
+        // Query the database to find the user by email
         const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        const user = userResult.rows[0];
+        const user = userResult.rows[0]; // Get the first result from the query
 
-        // Si no se encuentra el usuario
+        // If the user is not found
         if (!user) {
-            return res.status(401).json({ message: 'Credenciales incorrectas' });
+            return res.status(401).json({ message: 'Invalid credentials' }); // Respond with a 401 if the user does not exist
         }
 
-        // Comparar la contraseña proporcionada con la contraseña hasheada en la base de datos
+        // Compare the provided password with the hashed password stored in the database
         const passwordMatch = await bcrypt.compare(password, user.password);
-        console.log("¿Contraseña coincide?:", passwordMatch);
+        console.log("Do passwords match?:", passwordMatch); // Log the result of the password comparison
 
-        // Si las contraseñas no coinciden
+        // If the passwords do not match
         if (!passwordMatch) {
-            return res.status(401).json({ message: 'Credenciales incorrectas' });
+            return res.status(401).json({ message: 'Invalid credentials' }); // Respond with a 401 if the passwords do not match
         }
 
-        // Verificar las credenciales con el servicio de validación
+        // Make a request to an external validation service to further verify the credentials (optional)
         //const validationResponse = await axios.post('http://localhost:3003/validation/authenticate', {
-        const validationResponse = await axios.post('http://validate:3003/validation/authenticate', {
+        const validationResponse = await axios.post('http://validate:3003/validation/authenticate', { // External service URL for validation
             email,
             password,
         });
-        
 
-        // Si el servicio de validación devuelve un error
+        // If the external service returns an error or invalid credentials
         if (!validationResponse.data.valid) {
-            return res.status(401).json({ message: 'Credenciales inválidas' });
+            return res.status(401).json({ message: 'Invalid credentials' }); // Respond with a 401 if validation fails
         }
 
-        // Generar el JWT
+        // Generate a JWT token with the user's ID and role, set to expire in 1 hour
         const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        console.log("Token generado:", token);
+        console.log("Token generated:", token); // Log the generated token for debugging
 
-        // Enviar la respuesta con el token y el rol del usuario
+        // Send a response containing the JWT and the user's role
         res.json({ token, role: user.role });
     } catch (error) {
-        console.error("Error en el login:", error);
-        res.status(500).json({ message: 'Error en el servidor' });
+        console.error("Login error:", error); // Log any errors for debugging
+        res.status(500).json({ message: 'Server error' }); // Respond with a 500 status if an error occurs
     }
 });
 
-module.exports = router;
+module.exports = router; // Export the router to be used in the main application

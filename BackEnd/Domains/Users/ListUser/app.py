@@ -5,21 +5,21 @@ from userRoutes.routes import user_bp
 
 app = Flask(__name__)
 
-# Habilitar CORS
+# Enable CORS
 CORS(app)
 
-# Configurar Swagger
+# Configure Swagger
 swagger_template = {
     "swagger": "2.0",
     "info": {
         "title": "User API",
-        "description": "Microservicio para listar usuarios",
+        "description": "Microservice for listing users",
         "version": "1.0.0"
     }
 }
 Swagger(app, template=swagger_template)
 
-# Registrar rutas
+# Register routes
 app.register_blueprint(user_bp)
 
 if __name__ == "__main__":

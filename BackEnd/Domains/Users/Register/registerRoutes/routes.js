@@ -3,7 +3,7 @@ const registerController = require('../register');
 
 const router = express.Router();
 
-// Ruta para registrar un nuevo usuario
+// Route to register a new user
 router.post('/', registerController);
 
 module.exports = router;

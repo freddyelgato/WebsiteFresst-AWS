@@ -5,7 +5,7 @@ from searchRoutes.routes import create_routes
 app = Flask(__name__)
 CORS(app)
 
-# Registrar rutas
+# Register routes
 create_routes(app)
 
 if __name__ == "__main__":

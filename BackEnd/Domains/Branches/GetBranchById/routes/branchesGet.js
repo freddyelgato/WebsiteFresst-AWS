@@ -3,10 +3,10 @@ const BranchGet = require('../models/BranchGet');
 
 const router = express.Router();
 
-// Ruta para obtener todas las sucursales
+// Route to get all branches
 router.get('/', async (req, res) => {
   try {
-    const branches = await BranchGet.find(); // Obtener todas las sucursales
+    const branches = await BranchGet.find(); // Get all branches
 
     res.status(200).json({ status: 'success', branches });
   } catch (err) {
@@ -15,8 +15,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-// Ruta para obtener una sucursal por ID
+// Route to get a branch by ID
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;

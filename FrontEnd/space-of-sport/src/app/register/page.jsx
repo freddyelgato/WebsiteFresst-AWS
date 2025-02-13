@@ -26,10 +26,10 @@ const RegisterPage = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Error al registrar usuario');
+                throw new Error(data.message || 'Error registering user');
             }
 
-            setSuccess('Registro exitoso. Redirigiendo...');
+            setSuccess('Registration successful. Redirecting...');
             setTimeout(() => router.push('/login'), 2000);
         } catch (error) {
             setError(error.message);
@@ -39,12 +39,12 @@ const RegisterPage = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'linear-gradient(to right, #007bff, #00c6ff)' }}>
             <div style={{ padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', width: '400px', backgroundColor: '#fff' }}>
-                <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Registro</h1>
+                <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Register</h1>
                 {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '15px' }}>{error}</p>}
                 {success && <p style={{ color: 'green', textAlign: 'center', marginBottom: '15px' }}>{success}</p>}
                 <form onSubmit={handleSubmit}>
                     <div style={{ marginBottom: '15px' }}>
-                        <label htmlFor="name" style={{ display: 'block', marginBottom: '5px' }}>Nombre:</label>
+                        <label htmlFor="name" style={{ display: 'block', marginBottom: '5px' }}>Name:</label>
                         <input
                             id="name"
                             type="text"
@@ -80,7 +80,7 @@ const RegisterPage = () => {
                         />
                     </div>
                     <div style={{ marginBottom: '15px' }}>
-                        <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>Contraseña:</label>
+                        <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>Password:</label>
                         <input
                             id="password"
                             type="password"
@@ -111,11 +111,11 @@ const RegisterPage = () => {
                             transition: 'background-color 0.3s ease'
                         }}
                     >
-                        Registrarse
+                        Register
                     </button>
                 </form>
                 <p style={{ textAlign: 'center', marginTop: '15px' }}>
-                    ¿Ya tienes cuenta?{' '}
+                    Already have an account?{' '}
                     <a href="/login" style={{ color: '#007BFF', textDecoration: 'none' }}>
                         Login
                     </a>
@@ -131,7 +131,7 @@ const RegisterPage = () => {
                         borderRadius: '4px',
                         fontSize: '16px',
                         cursor: 'pointer',
-                        marginTop: '15px', // Espacio entre el formulario y el botón
+                        marginTop: '15px', // Space between the form and the button
                         transition: 'background-color 0.3s ease'
                     }}
                 >
