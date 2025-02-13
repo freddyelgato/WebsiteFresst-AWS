@@ -67,8 +67,8 @@ const Sidebar = () => {
             </ul>
           </div>
 
-          <Link href="/Cart" className="btn btn-outline-light w-100 d-flex align-items-center">
-            <i className="bi bi-cart me-2"></i> Cart
+          <Link href="/listClient" className="btn btn-outline-light w-100 d-flex align-items-center">
+            <i className="bi bi-cart me-2"></i> Clientes
           </Link>
 
         </div>

@@ -54,7 +54,7 @@ export default function ClientForm() {
         <NavbarUser />
       <div className="container mt-4">
         <div className="card shadow-lg p-4" style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <h2 className="mb-4 text-center">Registrar Cliente</h2>
+          <h2 className="mb-4 text-center">Formulario</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label className="form-label">Nombre</label>
