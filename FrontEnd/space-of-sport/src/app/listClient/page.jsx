@@ -12,7 +12,7 @@ import axios from "axios";
 export default function ListClients() {
     const [clients, setClients] = useState([]);
     const [filteredUser, setFilteredUser] = useState(null);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedClient, setSelectedClient] = useState(null);
 
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
@@ -55,68 +55,85 @@ export default function ListClients() {
     };
 
 
-    const deleteUser = async (id) => {
+    const deleteClient = async (id) => {
         try {
-            await axios.delete(`http://localhost:5001/delete/${id}`);
-            setUsers(users.filter((user) => user.id !== id));
+            await axios.delete(`http://localhost:5008/delete/${id}`);
+            setUsers(clients.filter((client) => client.id !== id));
         } catch (error) {
-            console.error("Error al eliminar usuario:", error);
+            console.error("Error al eliminar client:", error);
         }
     };
 
-    const updateUser = async (id, updatedName, updatedEmail) => {
-        console.log("Datos a enviar:", { updatedName, updatedEmail });
-
-        if (!updatedName || !updatedEmail) {
-            Swal.fire("Error", "Los campos de nombre y correo son obligatorios.", "error");
+    const updateClient = async (id, updatedNombre, updatedApellido, updatedCedula, updatedTelefono, updatedCiudad, updatedDireccion) => {
+        console.log("Datos a enviar:", { updatedNombre, updatedApellido, updatedCedula, updatedTelefono, updatedCiudad, updatedDireccion });
+    
+        if (!updatedNombre || !updatedApellido || !updatedCedula || !updatedTelefono || !updatedCiudad || !updatedDireccion) {
+            Swal.fire("Error", "Todos los campos son obligatorios.", "error");
             return;
         }
-
+    
         try {
-            await axios.put(`http://localhost:5002/update/${id}`, {
-                name: updatedName,
-                email: updatedEmail,
+            await axios.put(`http://localhost:5007/update/${id}`, {
+                nombre: updatedNombre,
+                apellido: updatedApellido,
+                cedula: updatedCedula,
+                telefono: updatedTelefono,
+                ciudad: updatedCiudad,
+                direccion: updatedDireccion,
             });
-
-            Swal.fire("Actualizado", "El usuario ha sido actualizado.", "success");
-            fetchUsers(); // Recargar la lista de usuarios
+    
+            Swal.fire("Actualizado", "El cliente ha sido actualizado.", "success");
+            fetchClients(); // Recargar la lista de clientes
         } catch (error) {
-            console.error("Error al actualizar usuario:", error);
-            Swal.fire("Error", "No se pudo actualizar el usuario.", "error");
+            console.error("Error al actualizar cliente:", error);
+            Swal.fire("Error", "No se pudo actualizar el cliente.", "error");
         }
     };
-
-    const handleUpdate = (user) => {
-        setSelectedUser(user);
-        setName(user.name);
-        setEmail(user.email);
-
+    
+    const handleUpdate = (client) => {
+        setSelectedClient(client);
+        setNombre(client.nombre);
+        setApellido(client.apellido);
+        setCedula(client.cedula);
+        setTelefono(client.telefono);
+        setCiudad(client.ciudad);
+        setDireccion(client.direccion);
+    
         Swal.fire({
-            title: "Editar Usuario",
+            title: "Editar Cliente",
             html: `
-        <input id="swal-name" class="swal2-input" placeholder="Nombre" value="${user.name}">
-        <input id="swal-email" class="swal2-input" placeholder="Correo" value="${user.email}">
-      `,
+                <input id="swal-nombre" class="swal2-input" placeholder="Nombre" value="${client.nombre}">
+                <input id="swal-apellido" class="swal2-input" placeholder="Apellido" value="${client.apellido}">
+                <input id="swal-cedula" class="swal2-input" placeholder="Cédula" value="${client.cedula}">
+                <input id="swal-telefono" class="swal2-input" placeholder="Teléfono" value="${client.telefono}">
+                <input id="swal-ciudad" class="swal2-input" placeholder="Ciudad" value="${client.ciudad}">
+                <input id="swal-direccion" class="swal2-input" placeholder="Dirección" value="${client.direccion}">
+            `,
             showCancelButton: true,
             confirmButtonText: "Actualizar",
             cancelButtonText: "Cancelar",
             preConfirm: () => {
-                const newName = document.getElementById("swal-name").value.trim();
-                const newEmail = document.getElementById("swal-email").value.trim();
-
-                if (!newName || !newEmail) {
-                    Swal.showValidationMessage("Por favor, ingrese un nombre y un correo.");
+                const newNombre = document.getElementById("swal-nombre").value.trim();
+                const newApellido = document.getElementById("swal-apellido").value.trim();
+                const newCedula = document.getElementById("swal-cedula").value.trim();
+                const newTelefono = document.getElementById("swal-telefono").value.trim();
+                const newCiudad = document.getElementById("swal-ciudad").value.trim();
+                const newDireccion = document.getElementById("swal-direccion").value.trim();
+    
+                if (!newNombre || !newApellido || !newCedula || !newTelefono || !newCiudad || !newDireccion) {
+                    Swal.showValidationMessage("Por favor, complete todos los campos.");
                     return false;
                 }
-
-                return { newName, newEmail };
+    
+                return { newNombre, newApellido, newCedula, newTelefono, newCiudad, newDireccion };
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                updateUser(user.id, result.value.newName, result.value.newEmail);
+                updateClient(client.id, result.value.newNombre, result.value.newApellido, result.value.newCedula, result.value.newTelefono, result.value.newCiudad, result.value.newDireccion);
             }
         });
     };
+    
     const handleDelete = (id) => {
         Swal.fire({
             title: "¿Estás seguro?",
@@ -129,8 +146,8 @@ export default function ListClients() {
             cancelButtonText: "Cancelar",
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteUser(id); // Llamar a la función de eliminación si el usuario confirma
-                Swal.fire("Eliminado", "El usuario ha sido eliminado.", "success");
+                deleteClient(id); // Llamar a la función de eliminación si el usuario confirma
+                Swal.fire("Eliminado", "El cliente ha sido eliminado.", "success");
             }
         });
     };
@@ -140,7 +157,7 @@ export default function ListClients() {
             <Sidebar />
             <main style={{ flexGrow: 1, padding: '16px' }}>
                 <h1>Bienvenido al gestor de administración</h1>
-                <div className="container mt-4">
+                <div className="card mt-4 mb-4">
                     {/* Tarjeta principal */}
                     <div className="card shadow-lg">
                         <div className="card-header bg-primary text-white text-center">
